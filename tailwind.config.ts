@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -61,6 +62,22 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Custom colors for our Arabic kitchen store
+				meat: {
+					light: '#FDE1D3',
+					DEFAULT: '#C34A36',
+					dark: '#8B2E13'
+				},
+				spice: {
+					light: '#FFF8E0',
+					DEFAULT: '#E09F3E',
+					dark: '#B47E1B'
+				},
+				tool: {
+					light: '#D3E4FD',
+					DEFAULT: '#0EA5E9',
+					dark: '#0A78B1'
 				}
 			},
 			borderRadius: {
@@ -84,11 +101,47 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'fade-in': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(10px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'fade-in-right': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(-20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
+				},
+				'fade-in-left': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateX(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateX(0)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'fade-in': 'fade-in 0.5s ease-out',
+				'fade-in-right': 'fade-in-right 0.5s ease-out',
+				'fade-in-left': 'fade-in-left 0.5s ease-out'
+			},
+			fontFamily: {
+				arabic: ['Noto Sans Arabic', 'sans-serif']
 			}
 		}
 	},
