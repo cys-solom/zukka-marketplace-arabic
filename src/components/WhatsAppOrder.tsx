@@ -186,7 +186,13 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
     }
   };
 
-  const FloatingLabel = ({ children, id, ...props }: { children: React.ReactNode, id: string, className?: string }) => (
+  // Fixed FloatingLabel component type definition
+  interface FloatingLabelProps extends React.HTMLAttributes<HTMLDivElement> {
+    id: string;
+    children: React.ReactNode;
+  }
+
+  const FloatingLabel = ({ children, id, ...props }: FloatingLabelProps) => (
     <div className="relative">
       {children}
       <Label 
@@ -196,7 +202,6 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
           'text-xs -top-2.5 right-3 px-1 bg-white text-primary' : 
           'text-muted-foreground top-3 right-3'
         }`}
-        {...props}
       >
         {props.children}
       </Label>
