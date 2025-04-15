@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -189,7 +188,6 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
   // Fixed FloatingLabel component type definition
   interface FloatingLabelProps extends React.HTMLAttributes<HTMLDivElement> {
     id: string;
-    children: React.ReactNode;
   }
 
   const FloatingLabel = ({ children, id, ...props }: FloatingLabelProps) => (
@@ -203,7 +201,7 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
           'text-muted-foreground top-3 right-3'
         }`}
       >
-        {props.children}
+        {props.children || props['aria-label']}
       </Label>
     </div>
   );
