@@ -1,10 +1,12 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/components/ui/use-toast";
+import { motion } from "framer-motion";
 
 const WhatsappIcon = (props: any) => (
   <svg
@@ -29,6 +31,36 @@ interface FormData {
   notes: string;
 }
 
+const validateEgyptianPhoneNumber = (phone: string): boolean => {
+  // Egyptian phone number format validation
+  // Accepts: 01xxxxxxxxx (11 digits starting with 01)
+  // Or international format: +201xxxxxxxxx
+  const egyptianPhoneRegex = /^(\+?20)?(01)[0-2,5]{1}[0-9]{8}$/;
+  return egyptianPhoneRegex.test(phone.replace(/\s+/g, ''));
+};
+
+const formatPhoneNumberForWhatsapp = (phone: string): string => {
+  // Remove spaces, dashes, parentheses
+  const cleaned = phone.replace(/[\s\-\(\)]/g, '');
+  
+  // If starts with 0, replace with Egypt country code
+  if (cleaned.startsWith('01')) {
+    return '20' + cleaned.substring(1);
+  }
+  
+  // If already has country code, ensure it's in the right format
+  if (cleaned.startsWith('+20')) {
+    return cleaned.substring(1); // Remove the + sign
+  }
+  
+  if (cleaned.startsWith('20')) {
+    return cleaned;
+  }
+  
+  // Default case - should not happen with validation
+  return cleaned;
+};
+
 const WhatsAppOrder = () => {
   const [formData, setFormData] = useState<FormData>({
     fullName: '',
@@ -37,10 +69,40 @@ const WhatsAppOrder = () => {
     notes: ''
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
+  const [isSectionVisible, setIsSectionVisible] = useState(false);
   const { toast } = useToast();
+
+  // Animation on scroll detection
+  useEffect(() => {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setIsSectionVisible(true);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    const section = document.getElementById('whatsapp-order-section');
+    if (section) {
+      observer.observe(section);
+    }
+
+    return () => {
+      if (section) {
+        observer.unobserve(section);
+      }
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
+    // Clear phone error when user types in the phone field
+    if (name === 'phoneNumber') {
+      setPhoneError(null);
+    }
+    
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -48,7 +110,8 @@ const WhatsAppOrder = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    if (!formData.fullName || !formData.phoneNumber || !formData.orderDetails) {
+    // Validate all required fields
+    if (!formData.fullName || !formData.orderDetails) {
       toast({
         title: "خطأ في النموذج",
         description: "يرجى ملء جميع الحقول المطلوبة",
@@ -58,13 +121,31 @@ const WhatsAppOrder = () => {
       return;
     }
 
-    const message = `*طلب جديد من مطبخ زكا*%0A
-الاسم: ${formData.fullName}%0A
-رقم الجوال: ${formData.phoneNumber}%0A
-تفاصيل الطلب: ${formData.orderDetails}%0A
-${formData.notes ? `ملاحظات: ${formData.notes}%0A` : ''}`;
+    // Validate Egyptian phone number
+    if (!validateEgyptianPhoneNumber(formData.phoneNumber)) {
+      setPhoneError("يرجى إدخال رقم هاتف مصري صحيح (مثال: 01xxxxxxxxx)");
+      toast({
+        title: "خطأ في رقم الهاتف",
+        description: "يرجى إدخال رقم هاتف مصري صحيح",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
 
-    const whatsappUrl = `https://wa.me/966500000000?text=${message}`;
+    // Format WhatsApp message with emoji and improved formatting
+    const message = `📦 طلب جديد:%0A
+- الاسم: ${formData.fullName}%0A
+- رقم الجوال: ${formData.phoneNumber}%0A
+- تفاصيل الطلب: ${formData.orderDetails}%0A
+${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
+
+    // Format phone number for WhatsApp API
+    const formattedPhone = formatPhoneNumberForWhatsapp(formData.phoneNumber);
+    // Use Egyptian placeholder number
+    const whatsappNumber = '201000000000'; // Default Egyptian number
+    
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
     
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
@@ -81,91 +162,160 @@ ${formData.notes ? `ملاحظات: ${formData.notes}%0A` : ''}`;
         title: "تم إرسال الطلب بنجاح!",
         description: "سيتم التواصل معك قريباً.",
       });
-    }, 1000);
+    }, 800);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.4 }
+    }
+  };
+
+  const FloatingLabel = ({ children, id, ...props }: { children: React.ReactNode, id: string, className?: string }) => (
+    <div className="relative">
+      {children}
+      <Label 
+        htmlFor={id} 
+        className={`absolute transition-all duration-200 ${
+          formData[id as keyof FormData] ? 
+          'text-xs -top-2.5 right-3 px-1 bg-white text-primary' : 
+          'text-muted-foreground top-3 right-3'
+        }`}
+        {...props}
+      >
+        {props.children}
+      </Label>
+    </div>
+  );
+
   return (
-    <section id="whatsapp-order" className="py-16 bg-green-50">
-      <div className="container mx-auto px-4">
-        <div className="text-center mb-10">
+    <section 
+      id="whatsapp-order" 
+      className="py-16 relative overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #f8f8f8 0%, #e8f4ea 100%)"
+      }}
+    >
+      {/* Subtle pattern overlay */}
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none" 
+        style={{
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/beige-paper.png')",
+          backgroundRepeat: "repeat"
+        }}
+      ></div>
+      
+      <div id="whatsapp-order-section" className="container mx-auto px-4">
+        <motion.div 
+          className="text-center mb-10"
+          initial={{ opacity: 0, y: 30 }}
+          animate={isSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+          transition={{ duration: 0.6 }}
+        >
           <h2 className="section-title">اطلب عبر واتساب</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
             يمكنك طلب منتجاتنا بسهولة عبر واتساب. فقط املأ النموذج أدناه وسنتواصل معك في أقرب وقت ممكن.
           </p>
-        </div>
+        </motion.div>
         
-        <Card className="max-w-md mx-auto shadow-xl">
-          <CardHeader className="bg-green-600 text-white">
-            <CardTitle className="text-2xl font-bold flex items-center justify-center gap-3">
-              <WhatsappIcon className="text-white" />
-              نموذج الطلب
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <form onSubmit={handleSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="fullName">الاسم الكامل *</Label>
-                <Input
-                  id="fullName"
-                  name="fullName"
-                  value={formData.fullName}
-                  onChange={handleChange}
-                  placeholder="ادخل اسمك الكامل"
-                  className="form-input"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="phoneNumber">رقم الجوال *</Label>
-                <Input
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  value={formData.phoneNumber}
-                  onChange={handleChange}
-                  placeholder="05xxxxxxxx"
-                  className="form-input"
-                  required
-                  dir="ltr"
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="orderDetails">تفاصيل الطلب *</Label>
-                <Textarea
-                  id="orderDetails"
-                  name="orderDetails"
-                  value={formData.orderDetails}
-                  onChange={handleChange}
-                  placeholder="اذكر المنتجات والكميات المطلوبة"
-                  className="form-input min-h-[100px]"
-                  required
-                />
-              </div>
-              
-              <div className="space-y-2">
-                <Label htmlFor="notes">ملاحظات إضافية</Label>
-                <Textarea
-                  id="notes"
-                  name="notes"
-                  value={formData.notes}
-                  onChange={handleChange}
-                  placeholder="أي ملاحظات أو تعليمات خاصة"
-                  className="form-input"
-                />
-              </div>
-              
-              <Button 
-                type="submit" 
-                className="whatsapp-btn w-full"
-                disabled={isLoading}
-              >
-                <WhatsappIcon />
-                {isLoading ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
-              </Button>
-            </form>
-          </CardContent>
-        </Card>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isSectionVisible ? "visible" : "hidden"}
+        >
+          <Card className="max-w-md mx-auto shadow-xl hover:shadow-2xl transition-shadow duration-300 overflow-hidden">
+            <CardHeader className="bg-gradient-to-r from-green-600 to-green-500 text-white">
+              <CardTitle className="text-2xl font-bold flex items-center justify-center gap-3">
+                <WhatsappIcon className="text-white" />
+                نموذج الطلب
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="pt-6">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <FloatingLabel id="fullName">الاسم الكامل *</FloatingLabel>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent"
+                    required
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <FloatingLabel id="phoneNumber">رقم الجوال المصري *</FloatingLabel>
+                  <Input
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    className={`form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent ${phoneError ? 'border-red-400' : ''}`}
+                    placeholder="01xxxxxxxxx"
+                    required
+                    dir="ltr"
+                  />
+                  {phoneError && (
+                    <p className="text-sm text-red-500 mt-1">{phoneError}</p>
+                  )}
+                  <p className="text-xs text-muted-foreground">
+                    أدخل رقم مصري صحيح (فودافون، أورانج، اتصالات، وي)
+                  </p>
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <FloatingLabel id="orderDetails">تفاصيل الطلب *</FloatingLabel>
+                  <Textarea
+                    id="orderDetails"
+                    name="orderDetails"
+                    value={formData.orderDetails}
+                    onChange={handleChange}
+                    className="form-input min-h-[100px] border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
+                    required
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <FloatingLabel id="notes">ملاحظات إضافية</FloatingLabel>
+                  <Textarea
+                    id="notes"
+                    name="notes"
+                    value={formData.notes}
+                    onChange={handleChange}
+                    className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants}>
+                  <Button 
+                    type="submit" 
+                    className="whatsapp-btn w-full bg-green-600 hover:bg-green-700 transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98]"
+                    disabled={isLoading}
+                  >
+                    <WhatsappIcon />
+                    {isLoading ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
+                  </Button>
+                </motion.div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </section>
   );

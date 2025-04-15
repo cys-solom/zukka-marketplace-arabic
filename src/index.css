@@ -1,4 +1,6 @@
 
+/* Import Cairo font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap');
 
 @tailwind base;
@@ -100,11 +102,11 @@
 
 @layer components {
   .category-card {
-    @apply rounded-lg p-6 shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1;
+    @apply rounded-lg p-6 shadow-md transition-transform duration-300 hover:shadow-lg hover:-translate-y-1 hover:scale-[1.02];
   }
   
   .section-title {
-    @apply text-3xl font-bold text-primary mb-6 relative inline-block after:content-[''] after:absolute after:w-[50%] after:h-1 after:bg-accent after:right-0 after:bottom-0 pb-2;
+    @apply text-3xl font-bold text-primary mb-6 relative inline-block after:content-[''] after:absolute after:w-[50%] after:h-1 after:bg-accent after:right-0 after:bottom-0 pb-2 font-cairo;
   }
   
   .nav-link {
@@ -118,4 +120,53 @@
   .form-input {
     @apply w-full border border-gray-300 rounded-md p-3 focus:outline-none focus:ring-2 focus:ring-primary text-right;
   }
+}
+
+/* Additional Font Styles */
+.font-cairo {
+  font-family: 'Cairo', 'Noto Sans Arabic', sans-serif;
+}
+
+/* Preloader Animation */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-scale-up {
+  animation: scaleUp 0.4s ease-out forwards;
+}
+
+/* Floating Label Styles */
+.floating-label {
+  position: relative;
+}
+
+.floating-label input:focus + label,
+.floating-label input:not(:placeholder-shown) + label,
+.floating-label textarea:focus + label,
+.floating-label textarea:not(:placeholder-shown) + label {
+  transform: translateY(-1.5rem) scale(0.85);
+  color: theme('colors.primary.DEFAULT');
+  background-color: white;
+  padding: 0 0.25rem;
+}
+
+.floating-label label {
+  position: absolute;
+  right: 0.75rem;
+  top: 0.75rem;
+  transition: all 0.2s ease-out;
+  pointer-events: none;
+  padding: 0 0.25rem;
+  transform-origin: right top;
 }
