@@ -1,9 +1,14 @@
 
 import { useState, useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
+import { useToast } from "@/components/ui/use-toast";
 import { motion } from "framer-motion";
-import WhatsAppOrderForm from './WhatsAppOrderForm';
+import { Send, Phone } from 'lucide-react';
 
-// WhatsApp icon component for the sticky button
 const WhatsappIcon = (props: any) => (
   <svg
     width="24"
@@ -20,8 +25,31 @@ const WhatsappIcon = (props: any) => (
   </svg>
 );
 
+interface FormData {
+  fullName: string;
+  phoneNumber: string;
+  email: string;
+  orderDetails: string;
+}
+
+const validateEgyptianPhoneNumber = (phone: string): boolean => {
+  // Egyptian phone number format validation (simplified)
+  const egyptianPhoneRegex = /^(01)[0-9]{9}$/;
+  return egyptianPhoneRegex.test(phone.replace(/\s+/g, ''));
+};
+
 const WhatsAppOrder = () => {
+  const [formData, setFormData] = useState<FormData>({
+    fullName: '',
+    phoneNumber: '',
+    email: '',
+    orderDetails: ''
+  });
+  const [isLoading, setIsLoading] = useState(false);
+  const [phoneError, setPhoneError] = useState<string | null>(null);
   const [isSectionVisible, setIsSectionVisible] = useState(false);
+  const [activeTab, setActiveTab] = useState<'whatsapp' | 'phone'>('whatsapp');
+  const { toast } = useToast();
 
   // Animation on scroll detection
   useEffect(() => {
@@ -45,15 +73,115 @@ const WhatsAppOrder = () => {
     };
   }, []);
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    
+    // Clear errors when user types
+    if (name === 'phoneNumber') {
+      setPhoneError(null);
+    }
+    
+    setFormData(prev => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+
+    // Validate required fields
+    if (!formData.fullName || !formData.phoneNumber || !formData.orderDetails) {
+      toast({
+        title: "خطأ في النموذج",
+        description: "يرجى ملء جميع الحقول المطلوبة",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Validate phone number format
+    if (!validateEgyptianPhoneNumber(formData.phoneNumber)) {
+      setPhoneError("يرجى إدخال رقم هاتف صحيح");
+      toast({
+        title: "خطأ في رقم الهاتف",
+        description: "يرجى إدخال رقم هاتف صحيح",
+        variant: "destructive"
+      });
+      setIsLoading(false);
+      return;
+    }
+
+    // Handle different actions based on selected tab
+    if (activeTab === 'whatsapp') {
+      // Format WhatsApp message
+      const message = `📦 طلب جديد:%0A
+- الاسم: ${formData.fullName}%0A
+- رقم الجوال: ${formData.phoneNumber}%0A
+${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` : ''}
+- تفاصيل الطلب: ${formData.orderDetails}%0A`;
+
+      const whatsappNumber = '201017812946'; // The phone number specified in requirements
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+      
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        setIsLoading(false);
+        
+        setFormData({
+          fullName: '',
+          phoneNumber: '',
+          email: '',
+          orderDetails: ''
+        });
+        
+        toast({
+          title: "تم إرسال الطلب بنجاح!",
+          description: "سيتم التواصل معك قريباً.",
+        });
+      }, 800);
+    } else {
+      // Phone call option
+      const phoneNumber = '01017812946';
+      window.location.href = `tel:${phoneNumber}`;
+      setIsLoading(false);
+      
+      toast({
+        title: "جار الاتصال...",
+        description: "يتم توجيهك للاتصال بنا مباشرة.",
+      });
+    }
+  };
+
+  const containerVariants = {
+    hidden: { opacity: 0, y: 50 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { 
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.4 }
+    }
+  };
+
   return (
     <section 
       id="whatsapp-order" 
-      className="py-20 relative overflow-hidden"
+      className="py-24 relative overflow-hidden"
       style={{
         background: "linear-gradient(135deg, #f8f8f8 0%, #e8f4ea 100%)"
       }}
     >
-      {/* Background elements */}
+      {/* Modern background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
@@ -77,26 +205,146 @@ const WhatsAppOrder = () => {
         >
           <h2 className="section-title">اطلب الآن</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            يمكنك طلب منتجاتنا بسهولة عبر واتساب. فقط أدخل رقم هاتفك وسنتواصل معك في أقرب وقت ممكن.
+            يمكنك طلب منتجاتنا بسهولة عبر واتساب أو الاتصال المباشر. فقط املأ النموذج أدناه وسنتواصل معك في أقرب وقت ممكن.
           </p>
         </motion.div>
         
-        <div className="flex justify-center">
-          <div className="max-w-md w-full">
-            <WhatsAppOrderForm />
-          </div>
-        </div>
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isSectionVisible ? "visible" : "hidden"}
+          className="flex justify-center"
+        >
+          <Card className="max-w-xl w-full shadow-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden border-none">
+            <div className="bg-gradient-to-r from-primary to-accent h-2"></div>
+            <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 flex flex-row gap-2 pb-6">
+              <div className="flex w-full rounded-lg overflow-hidden">
+                <button 
+                  className={`w-1/2 py-3 px-4 flex items-center justify-center gap-2 font-medium transition-all duration-300 ${activeTab === 'whatsapp' ? 'bg-green-600 text-white' : 'bg-white/50 text-foreground hover:bg-white/80'}`}
+                  onClick={() => setActiveTab('whatsapp')}
+                >
+                  <WhatsappIcon className={activeTab === 'whatsapp' ? 'text-white' : 'text-green-600'} />
+                  طلب عبر واتساب
+                </button>
+                <button 
+                  className={`w-1/2 py-3 px-4 flex items-center justify-center gap-2 font-medium transition-all duration-300 ${activeTab === 'phone' ? 'bg-primary text-white' : 'bg-white/50 text-foreground hover:bg-white/80'}`}
+                  onClick={() => setActiveTab('phone')}
+                >
+                  <Phone className={activeTab === 'phone' ? 'text-white' : 'text-primary'} size={20} />
+                  اتصل بنا
+                </button>
+              </div>
+            </CardHeader>
+            <CardContent className="p-8">
+              <form onSubmit={handleSubmit} className="space-y-6">
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <Label htmlFor="fullName" className="block text-foreground mb-1">
+                    الاسم الكامل *
+                  </Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className="w-full border-2 focus:border-primary p-3 rounded-md"
+                    required
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <Label htmlFor="phoneNumber" className="block text-foreground mb-1">
+                    ادخل رقم الجوال *
+                  </Label>
+                  <Input
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    value={formData.phoneNumber}
+                    onChange={handleChange}
+                    className={`w-full border-2 focus:border-primary p-3 rounded-md ${phoneError ? 'border-red-400' : ''}`}
+                    placeholder="01xxxxxxxxx"
+                    required
+                    dir="ltr"
+                  />
+                  {phoneError && (
+                    <p className="text-sm text-red-500 mt-1">{phoneError}</p>
+                  )}
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <Label htmlFor="email" className="block text-foreground mb-1">
+                    البريد الإلكتروني (اختياري)
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full border-2 focus:border-primary p-3 rounded-md"
+                    dir="ltr"
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants} className="space-y-1">
+                  <Label htmlFor="orderDetails" className="block text-foreground mb-1">
+                    تفاصيل الطلب *
+                  </Label>
+                  <Textarea
+                    id="orderDetails"
+                    name="orderDetails"
+                    value={formData.orderDetails}
+                    onChange={handleChange}
+                    className="w-full min-h-[120px] border-2 focus:border-primary p-3 rounded-md"
+                    required
+                  />
+                </motion.div>
+                
+                <motion.div variants={itemVariants}>
+                  <Button 
+                    type="submit" 
+                    className={`w-full py-6 text-white font-bold transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
+                      activeTab === 'whatsapp' 
+                        ? 'bg-green-600 hover:bg-green-700' 
+                        : 'bg-primary hover:bg-primary/90'
+                    }`}
+                    disabled={isLoading}
+                  >
+                    {activeTab === 'whatsapp' ? (
+                      <>
+                        <WhatsappIcon className="ml-2" />
+                        {isLoading ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
+                      </>
+                    ) : (
+                      <>
+                        <Phone size={20} className="ml-2" />
+                        {isLoading ? 'جارِ المعالجة...' : 'اتصل بنا مباشرة'}
+                      </>
+                    )}
+                  </Button>
+                </motion.div>
+
+                <motion.div variants={itemVariants} className="text-center text-sm text-muted-foreground pt-2">
+                  {activeTab === 'whatsapp' ? (
+                    <>سيتم تحويلك إلى تطبيق واتساب لإكمال طلبك</>
+                  ) : (
+                    <>سيتم الاتصال بالرقم: 01017812946</>
+                  )}
+                </motion.div>
+              </form>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
       
-      {/* Sticky floating WhatsApp button (visible only on mobile) */}
+      {/* Sticky order button (visible only on mobile) */}
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 md:hidden animate-float">
-        <a 
-          href="https://wa.me/201017812946" 
+        <Button 
+          onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
           className="whatsapp-btn rounded-full px-6 py-3 shadow-lg"
         >
           <WhatsappIcon className="ml-2" />
           اطلب الآن
-        </a>
+        </Button>
       </div>
     </section>
   );
