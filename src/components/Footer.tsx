@@ -31,7 +31,7 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="relative bg-gradient-to-b from-primary/95 to-primary-dark/95 text-white overflow-hidden">
+    <footer id="contact" className="relative bg-gradient-to-b from-primary to-primary-dark/90 text-white overflow-hidden">
       {/* Background pattern */}
       <div 
         className="absolute inset-0 opacity-5" 
@@ -46,13 +46,16 @@ const Footer = () => {
         <button 
           onClick={scrollToTop}
           className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white text-primary flex items-center justify-center shadow-lg hover:bg-accent hover:text-white transition-all duration-300"
+          aria-label="العودة للأعلى"
         >
           <ArrowUp size={20} />
         </button>
       </div>
 
-      <div className="container mx-auto px-4 pt-20 pb-8">
-        <div className="grid md:grid-cols-4 gap-12">
+      <div className="container mx-auto px-4 pt-16 pb-8">
+        {/* Two column layout that becomes one column on mobile */}
+        <div className="grid md:grid-cols-2 gap-12 mb-16">
+          {/* Column 1: About & Social */}
           <div>
             <h3 className="text-3xl font-bold mb-6 font-cairo">
               <span className="text-spice-light">مطبخ</span> زكا
@@ -60,134 +63,151 @@ const Footer = () => {
             <p className="text-white/80 leading-relaxed mb-6">
               نقدم أفضل اللحوم والبهارات وأدوات المطبخ بجودة عالية وأسعار مناسبة. جميع منتجاتنا طازجة ومختارة بعناية.
             </p>
+            <h4 className="text-xl font-bold mb-4 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">تابعنا</h4>
             <div className="flex space-x-4 space-x-reverse">
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                 aria-label="Instagram"
               >
-                <Instagram size={18} />
+                <Instagram size={20} />
               </a>
               <a 
                 href="#" 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
                 aria-label="Facebook"
               >
-                <Facebook size={18} />
+                <Facebook size={20} />
               </a>
               <a 
                 href="https://wa.me/201017812946" 
-                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center hover:bg-green-700 transition-colors"
                 aria-label="WhatsApp"
               >
-                <WhatsappIcon size={18} />
+                <WhatsappIcon size={20} />
               </a>
             </div>
           </div>
           
+          {/* Column 2: Contact Info */}
           <div>
-            <h3 className="text-xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">روابط سريعة</h3>
-            <ul className="space-y-3">
-              <li>
-                <Link to="/" className="text-white/80 hover:text-white transition-colors flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent group-hover:w-3 transition-all duration-300"></span>
-                  الرئيسية
-                </Link>
-              </li>
-              <li>
-                <Link to="/#products" className="text-white/80 hover:text-white transition-colors flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent group-hover:w-3 transition-all duration-300"></span>
-                  المنتجات
-                </Link>
-              </li>
-              <li>
-                <Link to="/#whatsapp-order" className="text-white/80 hover:text-white transition-colors flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent group-hover:w-3 transition-all duration-300"></span>
-                  اطلب عبر واتساب
-                </Link>
-              </li>
-              <li>
-                <Link to="/#contact" className="text-white/80 hover:text-white transition-colors flex items-center gap-2 group">
-                  <span className="w-1.5 h-1.5 rounded-full bg-accent group-hover:w-3 transition-all duration-300"></span>
-                  اتصل بنا
-                </Link>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">معلومات التواصل</h3>
-            <ul className="space-y-4">
-              <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-1 shrink-0 text-accent" />
-                <span className="text-white/80">
-                  شارع الملك فهد، حي العليا، الرياض
-                </span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Phone size={18} className="mt-1 shrink-0 text-accent" />
+            <h3 className="text-2xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">
+              يسعدنا استقبال اتصالاتكم وطلباتكم
+            </h3>
+            
+            <ul className="space-y-6">
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shrink-0">
+                  <MapPin size={22} className="text-accent" />
+                </div>
                 <div>
+                  <h4 className="font-bold text-lg mb-1">العنوان</h4>
+                  <p className="text-white/80">
+                    شارع الملك فهد، حي العليا، الرياض
+                  </p>
+                </div>
+              </li>
+              
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shrink-0">
+                  <Phone size={22} className="text-accent" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg mb-1">اتصل بنا</h4>
                   <a 
                     href="tel:01017812946" 
-                    className="text-white/80 hover:text-white transition-colors inline-block"
+                    className="text-white text-xl hover:text-accent transition-colors inline-block"
                   >
                     01017812946
                   </a>
                   <p className="text-white/60 text-sm">متاح على مدار اليوم</p>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <WhatsappIcon size={18} className="mt-1 shrink-0 text-accent" />
+              
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-12 h-12 rounded-full bg-green-600 flex items-center justify-center group-hover:bg-green-700 transition-all duration-300 shrink-0">
+                  <WhatsappIcon size={22} className="text-white" />
+                </div>
                 <div>
+                  <h4 className="font-bold text-lg mb-1">واتساب</h4>
                   <a 
                     href="https://wa.me/201017812946" 
-                    className="text-white/80 hover:text-white transition-colors inline-block"
+                    className="text-white text-xl hover:text-accent transition-colors inline-block"
                   >
                     01017812946
                   </a>
-                  <p className="text-white/60 text-sm">واتساب للطلبات والاستفسارات</p>
+                  <p className="text-white/60 text-sm">للطلبات والاستفسارات</p>
                 </div>
               </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="mt-1 shrink-0 text-accent" />
-                <a 
-                  href="mailto:info@example.com" 
-                  className="text-white/80 hover:text-white transition-colors"
-                >
-                  info@example.com
-                </a>
-              </li>
-            </ul>
-          </div>
-          
-          <div>
-            <h3 className="text-xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">ساعات العمل</h3>
-            <ul className="space-y-3">
-              <li className="flex justify-between items-center pb-2 border-b border-white/10">
-                <span className="text-white/80">السبت - الأربعاء</span>
-                <span className="text-white">9:00 ص - 10:00 م</span>
-              </li>
-              <li className="flex justify-between items-center pb-2 border-b border-white/10">
-                <span className="text-white/80">الخميس</span>
-                <span className="text-white">9:00 ص - 11:00 م</span>
-              </li>
-              <li className="flex justify-between items-center pb-2 border-b border-white/10">
-                <span className="text-white/80">الجمعة</span>
-                <span className="text-white">2:00 م - 10:00 م</span>
-              </li>
-              <li className="mt-4">
-                <div className="py-2 px-4 bg-accent/20 rounded-lg text-center">
-                  <span className="text-white font-bold">مفتوح الآن</span>
+              
+              <li className="flex items-start gap-4 group">
+                <div className="mt-1 w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white/20 transition-all duration-300 shrink-0">
+                  <Mail size={22} className="text-accent" />
+                </div>
+                <div>
+                  <h4 className="font-bold text-lg mb-1">البريد الإلكتروني</h4>
+                  <a 
+                    href="mailto:info@example.com" 
+                    className="text-white hover:text-accent transition-colors"
+                  >
+                    info@example.com
+                  </a>
                 </div>
               </li>
             </ul>
           </div>
         </div>
         
-        <div className="border-t border-white/10 mt-12 pt-8 text-center">
-          <p className="text-white/60">
-            © {currentYear} مطبخ زكا. جميع الحقوق محفوظة
-          </p>
+        {/* Opening Hours - Single Column */}
+        <div className="mb-12">
+          <h3 className="text-2xl font-bold mb-6 text-center relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">
+            ساعات العمل
+          </h3>
+          
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+            <div className="bg-white/10 rounded-lg p-4 text-center hover:bg-white/15 transition-all duration-300">
+              <p className="font-bold mb-2">السبت - الأربعاء</p>
+              <p className="text-white/80">9:00 ص - 10:00 م</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4 text-center hover:bg-white/15 transition-all duration-300">
+              <p className="font-bold mb-2">الخميس</p>
+              <p className="text-white/80">9:00 ص - 11:00 م</p>
+            </div>
+            <div className="bg-white/10 rounded-lg p-4 text-center hover:bg-white/15 transition-all duration-300">
+              <p className="font-bold mb-2">الجمعة</p>
+              <p className="text-white/80">2:00 م - 10:00 م</p>
+            </div>
+          </div>
+          
+          <div className="mt-6 text-center">
+            <span className="py-2 px-6 bg-accent/20 rounded-full text-center inline-block">
+              <span className="text-white font-bold">مفتوح الآن</span>
+            </span>
+          </div>
+        </div>
+        
+        {/* Quick Links - Mobile Friendly */}
+        <div className="border-t border-white/10 pt-8 pb-4">
+          <div className="flex flex-wrap justify-center gap-6 mb-8">
+            <Link to="/" className="text-white/80 hover:text-white transition-colors">
+              الرئيسية
+            </Link>
+            <Link to="/#products" className="text-white/80 hover:text-white transition-colors">
+              المنتجات
+            </Link>
+            <Link to="/#whatsapp-order" className="text-white/80 hover:text-white transition-colors">
+              اطلب عبر واتساب
+            </Link>
+            <Link to="/#contact" className="text-white/80 hover:text-white transition-colors">
+              اتصل بنا
+            </Link>
+          </div>
+          
+          <div className="text-center">
+            <p className="text-white/60">
+              © {currentYear} مطبخ زكا. جميع الحقوق محفوظة
+            </p>
+          </div>
         </div>
       </div>
     </footer>
