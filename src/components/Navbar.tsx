@@ -59,18 +59,26 @@ const Navbar = () => {
             >
               الرئيسية
             </Link>
-            <Link 
-              to="/#products" 
+            <a 
+              href="#products" 
               className={`nav-link font-medium transition-colors ${isScrolled ? 'text-foreground' : 'text-white'}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('products')?.scrollIntoView({behavior: 'smooth'});
+              }}
             >
               المنتجات
-            </Link>
-            <Link 
-              to="/#contact" 
+            </a>
+            <a 
+              href="#whatsapp-order" 
               className={`nav-link font-medium transition-colors ${isScrolled ? 'text-foreground' : 'text-white'}`}
+              onClick={(e) => {
+                e.preventDefault();
+                document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'});
+              }}
             >
-              اتصل بنا
-            </Link>
+              اطلب الآن
+            </a>
             <div className="flex items-center gap-4">
               <a 
                 href="tel:01017812946"
@@ -93,6 +101,7 @@ const Navbar = () => {
           <button 
             className={`md:hidden focus:outline-none transition-colors ${isScrolled ? 'text-primary' : 'text-white'}`}
             onClick={() => setIsOpen(!isOpen)}
+            aria-label={isOpen ? "إغلاق القائمة" : "فتح القائمة"}
           >
             {isOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
@@ -108,31 +117,39 @@ const Navbar = () => {
               exit={{ opacity: 0, height: 0 }}
               transition={{ duration: 0.3 }}
             >
-              <div className="flex flex-col space-y-4">
+              <div className="flex flex-col space-y-4 bg-background/80 backdrop-blur-md p-4 rounded-lg">
                 <Link 
                   to="/" 
-                  className={`nav-link font-medium py-2 ${isScrolled ? 'text-foreground' : 'text-white'}`} 
+                  className="nav-link font-medium py-2 text-foreground" 
                   onClick={() => setIsOpen(false)}
                 >
                   الرئيسية
                 </Link>
-                <Link 
-                  to="/#products" 
-                  className={`nav-link font-medium py-2 ${isScrolled ? 'text-foreground' : 'text-white'}`} 
-                  onClick={() => setIsOpen(false)}
+                <a 
+                  href="#products" 
+                  className="nav-link font-medium py-2 text-foreground" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('products')?.scrollIntoView({behavior: 'smooth'});
+                    setIsOpen(false);
+                  }}
                 >
                   المنتجات
-                </Link>
-                <Link 
-                  to="/#contact" 
-                  className={`nav-link font-medium py-2 ${isScrolled ? 'text-foreground' : 'text-white'}`} 
-                  onClick={() => setIsOpen(false)}
+                </a>
+                <a 
+                  href="#whatsapp-order" 
+                  className="nav-link font-medium py-2 text-foreground" 
+                  onClick={(e) => {
+                    e.preventDefault();
+                    document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'});
+                    setIsOpen(false);
+                  }}
                 >
-                  اتصل بنا
-                </Link>
+                  اطلب الآن
+                </a>
                 <a 
                   href="tel:01017812946"
-                  className={`flex items-center gap-2 font-medium py-2 ${isScrolled ? 'text-primary' : 'text-white'}`}
+                  className="flex items-center gap-2 font-medium py-2 text-primary"
                 >
                   <Phone size={18} />
                   01017812946

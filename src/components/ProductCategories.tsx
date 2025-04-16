@@ -1,6 +1,6 @@
 
 import { useState, useEffect } from 'react';
-import { Beef, Utensils, ShoppingBag } from 'lucide-react';
+import { Beef, UtensilsCrossed, Soup } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardFooter } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -9,7 +9,7 @@ import { useInView } from 'react-intersection-observer';
 const categories = [
   {
     id: 'meat',
-    title: 'اللحوم',
+    title: 'اللحوم الطازجة',
     description: 'نقدم أجود أنواع اللحوم الطازجة المذبوحة على الطريقة الإسلامية، من لحوم الضأن والبقر بمختلف أنواعها وقطعياتها.',
     image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop',
     icon: Beef,
@@ -18,11 +18,11 @@ const categories = [
     buttonBg: 'bg-meat-dark'
   },
   {
-    id: 'spices',
-    title: 'البهارات',
-    description: 'مجموعة مختارة من أفخر أنواع البهارات الطازجة والمميزة، مطحونة ومعبأة بعناية لتحافظ على نكهتها ورائحتها.',
-    image: 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?q=80&w=2070&auto=format&fit=crop',
-    icon: ShoppingBag,
+    id: 'meals',
+    title: 'الوجبات الجاهزة',
+    description: 'وجبات جاهزة شهية محضرة بعناية من أجود المكونات الطازجة، مثالية للعائلة والضيوف وبنكهات أصيلة ومميزة.',
+    image: 'https://images.unsplash.com/photo-1547928576-a4a33237cbc3?q=80&w=2070&auto=format&fit=crop',
+    icon: Soup,
     color: 'bg-spice-light',
     accent: 'text-spice-dark',
     buttonBg: 'bg-spice-dark'
@@ -32,7 +32,7 @@ const categories = [
     title: 'أدوات المطبخ',
     description: 'كل ما تحتاجه من أدوات وملحقات المطبخ عالية الجودة، من سكاكين وأواني وأدوات تقطيع وتقديم.',
     image: 'https://images.unsplash.com/photo-1545015451-f05567aa6bcc?q=80&w=2069&auto=format&fit=crop',
-    icon: Utensils,
+    icon: UtensilsCrossed,
     color: 'bg-tool-light',
     accent: 'text-tool-dark',
     buttonBg: 'bg-tool-dark'
@@ -89,7 +89,7 @@ const ProductCategories = () => {
         >
           <h2 className="section-title text-center mx-auto">منتجاتنا المميزة</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            نقدم لكم مجموعة متنوعة من المنتجات عالية الجودة بأسعار تنافسية
+            نقدم لكم مجموعة متنوعة من اللحوم والوجبات الجاهزة عالية الجودة بأسعار تنافسية
           </p>
         </motion.div>
         

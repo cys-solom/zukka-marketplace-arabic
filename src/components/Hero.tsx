@@ -33,14 +33,14 @@ const Hero = () => {
 
   return (
     <div className="relative min-h-screen flex items-center overflow-hidden">
-      {/* Modern gradient overlay with pattern */}
+      {/* Premium gradient overlay with pattern */}
       <div className="absolute inset-0 bg-gradient-to-b from-meat-dark/80 via-primary/70 to-spice-dark/80 -z-10"></div>
       
-      {/* Background image with slight blur for modern effect */}
+      {/* High-quality background image with slight blur for modern effect */}
       <div 
         className="absolute inset-0 -z-20"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1558030089-02acba3c2a74?q=80&w=3269&auto=format&fit=crop')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           filter: "brightness(0.7) blur(1px)"
@@ -65,14 +65,14 @@ const Hero = () => {
         >
           <motion.div variants={itemVariants}>
             <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-lg">
-              <span className="text-spice-light font-cairo">لحوم وبهارات</span> طازجة ومميزة
+              <span className="text-spice-light font-cairo">منتجات لحوم ومأكولات</span> جاهزة بمذاق لا يُقاوم
             </h1>
           </motion.div>
           
           <motion.div variants={itemVariants}>
             <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow-md backdrop-blur-sm bg-black/10 p-4 rounded-lg">
-              نقدم أجود أنواع اللحوم والبهارات الطازجة وأدوات المطبخ العالية الجودة بأسعار مناسبة. 
-              تذوق الفرق مع منتجات مطبخ زكا المختارة بعناية.
+              نوفر لك أفضل أنواع اللحوم الطازجة والمأكولات الجاهزة المختارة بعناية وبأسعار مناسبة. 
+              جرب الفرق مع مطبخ زكا!
             </p>
           </motion.div>
           

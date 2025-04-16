@@ -63,7 +63,7 @@ export default {
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
 				},
-				// Custom colors for our Arabic kitchen store
+				// Custom colors for our Arabic kitchen store - updated for premium feel
 				meat: {
 					light: '#FDE1D3',
 					DEFAULT: '#E05D41',
