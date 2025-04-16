@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -201,7 +202,8 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
           'text-muted-foreground top-3 right-3'
         }`}
       >
-        {props.children || props['aria-label']}
+        {/* Fix: Access the label text from the aria-label attribute or children property safely */}
+        {typeof props["aria-label"] === "string" ? props["aria-label"] : ""}
       </Label>
     </div>
   );
@@ -251,29 +253,31 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
             <CardContent className="pt-6">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <FloatingLabel id="fullName">الاسم الكامل *</FloatingLabel>
-                  <Input
-                    id="fullName"
-                    name="fullName"
-                    value={formData.fullName}
-                    onChange={handleChange}
-                    className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent"
-                    required
-                  />
+                  <FloatingLabel id="fullName" aria-label="الاسم الكامل *">
+                    <Input
+                      id="fullName"
+                      name="fullName"
+                      value={formData.fullName}
+                      onChange={handleChange}
+                      className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent"
+                      required
+                    />
+                  </FloatingLabel>
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <FloatingLabel id="phoneNumber">رقم الجوال المصري *</FloatingLabel>
-                  <Input
-                    id="phoneNumber"
-                    name="phoneNumber"
-                    value={formData.phoneNumber}
-                    onChange={handleChange}
-                    className={`form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent ${phoneError ? 'border-red-400' : ''}`}
-                    placeholder="01xxxxxxxxx"
-                    required
-                    dir="ltr"
-                  />
+                  <FloatingLabel id="phoneNumber" aria-label="رقم الجوال المصري *">
+                    <Input
+                      id="phoneNumber"
+                      name="phoneNumber"
+                      value={formData.phoneNumber}
+                      onChange={handleChange}
+                      className={`form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-4 bg-transparent ${phoneError ? 'border-red-400' : ''}`}
+                      placeholder="01xxxxxxxxx"
+                      required
+                      dir="ltr"
+                    />
+                  </FloatingLabel>
                   {phoneError && (
                     <p className="text-sm text-red-500 mt-1">{phoneError}</p>
                   )}
@@ -283,26 +287,28 @@ ${formData.notes ? `- ملاحظات: ${formData.notes}%0A` : ''}`;
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <FloatingLabel id="orderDetails">تفاصيل الطلب *</FloatingLabel>
-                  <Textarea
-                    id="orderDetails"
-                    name="orderDetails"
-                    value={formData.orderDetails}
-                    onChange={handleChange}
-                    className="form-input min-h-[100px] border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
-                    required
-                  />
+                  <FloatingLabel id="orderDetails" aria-label="تفاصيل الطلب *">
+                    <Textarea
+                      id="orderDetails"
+                      name="orderDetails"
+                      value={formData.orderDetails}
+                      onChange={handleChange}
+                      className="form-input min-h-[100px] border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
+                      required
+                    />
+                  </FloatingLabel>
                 </motion.div>
                 
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <FloatingLabel id="notes">ملاحظات إضافية</FloatingLabel>
-                  <Textarea
-                    id="notes"
-                    name="notes"
-                    value={formData.notes}
-                    onChange={handleChange}
-                    className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
-                  />
+                  <FloatingLabel id="notes" aria-label="ملاحظات إضافية">
+                    <Textarea
+                      id="notes"
+                      name="notes"
+                      value={formData.notes}
+                      onChange={handleChange}
+                      className="form-input border-2 focus:border-green-400 rounded-md shadow-sm pt-6 bg-transparent"
+                    />
+                  </FloatingLabel>
                 </motion.div>
                 
                 <motion.div variants={itemVariants}>
