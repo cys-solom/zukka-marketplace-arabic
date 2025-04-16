@@ -7,15 +7,30 @@
     <title>مطبخ زكا - لوازم المطبخ واللحوم والبهارات</title>
     <meta name="description" content="موقع مطبخ زكا لبيع لوازم المطبخ والطبخ واللحوم والبهارات بجودة عالية وأسعار مناسبة" />
     <meta name="author" content="مطبخ زكا" />
+    <meta name="keywords" content="مطبخ زكا, لحوم طازجة, بهارات, أدوات المطبخ, توصيل, طلب عبر واتساب" />
 
-    <meta property="og:title" content="مطبخ زكا - لوازم المطبخ واللحوم والبهارات" />
-    <meta property="og:description" content="موقع مطبخ زكا لبيع لوازم المطبخ والطبخ واللحوم والبهارات بجودة عالية وأسعار مناسبة" />
+    <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://www.example.com/" />
+    <meta property="og:title" content="مطبخ زكا - لحوم وبهارات طازجة" />
+    <meta property="og:description" content="موقع مطبخ زكا لبيع لوازم المطبخ والطبخ واللحوم والبهارات بجودة عالية وأسعار مناسبة" />
     <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
+    <!-- Twitter -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@lovable_dev" />
     <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    
+    <!-- Fonts -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/favicon.ico" />
+    
+    <!-- AOS Animation Library -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
   </head>
 
   <body>
@@ -23,5 +38,17 @@
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS VERY COMMENT! -->
     <script src="https://cdn.gpteng.co/gptengineer.js" type="module"></script>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Animation Library -->
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 800,
+          easing: 'ease-out',
+          once: true
+        });
+      });
+    </script>
   </body>
 </html>

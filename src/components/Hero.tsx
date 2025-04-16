@@ -1,7 +1,8 @@
 
 import { useEffect, useState } from 'react';
-import { ArrowDown } from 'lucide-react';
+import { ArrowDown, ShoppingCart } from 'lucide-react';
 import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 
 const Hero = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -10,52 +11,103 @@ const Hero = () => {
     setIsVisible(true);
   }, []);
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: { 
+      opacity: 1,
+      transition: { 
+        duration: 0.8,
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.6 }
+    }
+  };
+
   return (
-    <div className="relative h-screen flex items-center overflow-hidden">
-      <div className="absolute inset-0 bg-gradient-to-b from-meat-light/80 to-spice-light/80 -z-10"></div>
+    <div className="relative min-h-screen flex items-center overflow-hidden">
+      {/* Modern gradient overlay with pattern */}
+      <div className="absolute inset-0 bg-gradient-to-b from-meat-dark/80 via-primary/70 to-spice-dark/80 -z-10"></div>
+      
+      {/* Background image with slight blur for modern effect */}
       <div 
         className="absolute inset-0 -z-20"
         style={{
-          backgroundImage: "url('https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1974&q=80')",
+          backgroundImage: "url('https://images.unsplash.com/photo-1558030089-02acba3c2a74?q=80&w=3269&auto=format&fit=crop')",
           backgroundSize: "cover",
           backgroundPosition: "center",
-          filter: "brightness(0.9)"
+          filter: "brightness(0.7) blur(1px)"
+        }}
+      ></div>
+      
+      {/* Subtle background pattern */}
+      <div 
+        className="absolute inset-0 opacity-5 -z-10" 
+        style={{
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
+          backgroundRepeat: "repeat"
         }}
       ></div>
       
       <div className="container mx-auto px-4">
-        <div className={`max-w-3xl transition-all duration-1000 transform ${isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
-          <h1 className="text-4xl md:text-6xl font-bold text-primary mb-4">
-            <span className="text-meat-dark">لحوم وبهارات</span> طازجة ومميزة
-          </h1>
-          <p className="text-lg md:text-xl text-foreground/90 mb-8">
-            نقدم أجود أنواع اللحوم والبهارات الطازجة وأدوات المطبخ العالية الجودة بأسعار مناسبة. 
-            تذوق الفرق مع منتجات مطبخ زكا المختارة بعناية.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4">
+        <motion.div 
+          className="max-w-3xl"
+          initial="hidden"
+          animate={isVisible ? "visible" : "hidden"}
+          variants={containerVariants}
+        >
+          <motion.div variants={itemVariants}>
+            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-4 drop-shadow-lg">
+              <span className="text-spice-light font-cairo">لحوم وبهارات</span> طازجة ومميزة
+            </h1>
+          </motion.div>
+          
+          <motion.div variants={itemVariants}>
+            <p className="text-lg md:text-xl text-white/90 mb-8 drop-shadow-md backdrop-blur-sm bg-black/10 p-4 rounded-lg">
+              نقدم أجود أنواع اللحوم والبهارات الطازجة وأدوات المطبخ العالية الجودة بأسعار مناسبة. 
+              تذوق الفرق مع منتجات مطبخ زكا المختارة بعناية.
+            </p>
+          </motion.div>
+          
+          <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-4">
             <Button 
               onClick={() => document.getElementById('products')?.scrollIntoView({behavior: 'smooth'})}
-              className="bg-primary hover:bg-primary/90 text-white px-8 py-3 rounded-lg text-lg"
+              className="bg-primary hover:bg-primary/90 text-white px-8 py-6 rounded-lg text-lg transform transition-transform hover:scale-105"
             >
               تصفح المنتجات
             </Button>
             <Button 
               onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
-              className="whatsapp-btn px-8 py-3 text-lg"
+              className="whatsapp-btn px-8 py-6 text-lg flex items-center gap-2"
             >
+              <ShoppingCart size={20} />
               اطلب الآن
             </Button>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
       
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <ArrowDown 
-          className="text-primary/70" 
-          size={32}
-          onClick={() => document.getElementById('address')?.scrollIntoView({behavior: 'smooth'})}
-        />
-      </div>
+      <motion.div 
+        className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 1.5, duration: 0.5 }}
+      >
+        <div className="animate-bounce p-2 bg-white/20 backdrop-blur-md rounded-full">
+          <ArrowDown 
+            className="text-white" 
+            size={32}
+            onClick={() => document.getElementById('address')?.scrollIntoView({behavior: 'smooth'})}
+          />
+        </div>
+      </motion.div>
     </div>
   );
 };

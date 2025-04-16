@@ -66,13 +66,13 @@ export default {
 				// Custom colors for our Arabic kitchen store
 				meat: {
 					light: '#FDE1D3',
-					DEFAULT: '#C34A36',
-					dark: '#8B2E13'
+					DEFAULT: '#E05D41',
+					dark: '#A93825'
 				},
 				spice: {
-					light: '#FFF8E0',
-					DEFAULT: '#E09F3E',
-					dark: '#B47E1B'
+					light: '#FFEED1',
+					DEFAULT: '#F3A742',
+					dark: '#D18A28'
 				},
 				tool: {
 					light: '#D3E4FD',
