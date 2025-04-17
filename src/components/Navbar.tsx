@@ -45,7 +45,8 @@ const Navbar = () => {
               className="relative"
             >
               <span className={`font-cairo ${isScrolled ? 'text-primary' : 'text-white'}`}>
-                <span className={isScrolled ? 'text-accent' : 'text-spice-light'}>مطبخ</span> زكا
+                <span className={isScrolled ? 'text-accent' : 'text-spice-light'}>مصنين</span>
+                <span className="block text-sm mt-1 font-normal opacity-80">وجبتك فريش</span>
               </span>
               <span className="absolute -bottom-1 right-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
             </motion.div>

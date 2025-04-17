@@ -1,9 +1,7 @@
-
 import { Phone, MapPin, Clock, Instagram, Facebook, Mail, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 
-// Creating a custom WhatsApp icon since there's no built-in one in lucide-react
 const WhatsappIcon = (props: any) => (
   <svg
     width="24"
@@ -31,21 +29,19 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="relative bg-gradient-to-b from-primary/95 to-primary-dark/95 text-white overflow-hidden">
-      {/* Background pattern */}
+    <footer id="contact" className="relative bg-gradient-to-b from-primary via-primary to-primary-dark text-white overflow-hidden">
       <div 
-        className="absolute inset-0 opacity-5" 
+        className="absolute inset-0 opacity-10" 
         style={{
           backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
           backgroundRepeat: "repeat"
         }}
       ></div>
 
-      {/* Scroll to top button */}
       <div className="container mx-auto px-4 relative">
         <button 
           onClick={scrollToTop}
-          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-white text-primary flex items-center justify-center shadow-lg hover:bg-accent hover:text-white transition-all duration-300"
+          className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-12 h-12 rounded-full bg-accent text-white flex items-center justify-center shadow-lg hover:bg-accent/90 transition-all duration-300"
         >
           <ArrowUp size={20} />
         </button>
@@ -55,7 +51,8 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           <div>
             <h3 className="text-3xl font-bold mb-6 font-cairo">
-              <span className="text-spice-light">مطبخ</span> زكا
+              <span className="text-spice-light">مصنين</span>
+              <span className="block text-lg mt-1 font-normal text-white/80">وجبتك فريش</span>
             </h3>
             <p className="text-white/80 leading-relaxed mb-6">
               نقدم أفضل اللحوم والبهارات وأدوات المطبخ بجودة عالية وأسعار مناسبة. جميع منتجاتنا طازجة ومختارة بعناية.
@@ -157,6 +154,11 @@ const Footer = () => {
                   info@example.com
                 </a>
               </li>
+              <li className="flex items-start gap-3 mt-6">
+                <span className="text-white/80">
+                  صاحبة المتجر: علياء شوقي
+                </span>
+              </li>
             </ul>
           </div>
           
@@ -184,9 +186,9 @@ const Footer = () => {
           </div>
         </div>
         
-        <div className="border-t border-white/10 mt-12 pt-8 text-center">
-          <p className="text-white/60">
-            © {currentYear} مطبخ زكا. جميع الحقوق محفوظة
+        <div className="border-t border-white/20 mt-12 pt-8 text-center">
+          <p className="text-white/80">
+            © {currentYear} مصنين. جميع الحقوق محفوظة لـ علياء شوقي
           </p>
         </div>
       </div>
