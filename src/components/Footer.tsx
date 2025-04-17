@@ -51,7 +51,7 @@ const Footer = () => {
         <div className="grid md:grid-cols-4 gap-12">
           <div>
             <h3 className="text-3xl font-bold mb-6 font-cairo">
-              <span className="text-spice-light">مصنين</span>
+              <span className="text-spice-light">صحتين</span>
               <span className="block text-lg mt-1 font-normal text-white/80">وجبتك فريش</span>
             </h3>
             <p className="text-white/80 leading-relaxed mb-6">
@@ -125,10 +125,10 @@ const Footer = () => {
                 <Phone size={18} className="mt-1 shrink-0 text-accent" />
                 <div>
                   <a 
-                    href="tel:01017812946" 
+                    href="tel:01030557250" 
                     className="text-white/80 hover:text-white transition-colors inline-block"
                   >
-                    01017812946
+                    01030557250
                   </a>
                   <p className="text-white/60 text-sm">متاح على مدار اليوم</p>
                 </div>
@@ -137,10 +137,10 @@ const Footer = () => {
                 <WhatsappIcon size={18} className="mt-1 shrink-0 text-accent" />
                 <div>
                   <a 
-                    href="https://wa.me/201017812946" 
+                    href="https://wa.me/201030557250" 
                     className="text-white/80 hover:text-white transition-colors inline-block"
                   >
-                    01017812946
+                    01030557250
                   </a>
                   <p className="text-white/60 text-sm">واتساب للطلبات والاستفسارات</p>
                 </div>
@@ -188,7 +188,7 @@ const Footer = () => {
         
         <div className="border-t border-white/20 mt-12 pt-8 text-center">
           <p className="text-white/80">
-            © {currentYear} مصنين. جميع الحقوق محفوظة لـ علياء شوقي
+            © {currentYear} صحتين. جميع الحقوق محفوظة لـ علياء شوقي
           </p>
         </div>
       </div>

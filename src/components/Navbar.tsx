@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Phone } from 'lucide-react';
@@ -45,7 +44,7 @@ const Navbar = () => {
               className="relative"
             >
               <span className={`font-cairo ${isScrolled ? 'text-primary' : 'text-white'}`}>
-                <span className={isScrolled ? 'text-accent' : 'text-spice-light'}>مصنين</span>
+                <span className={isScrolled ? 'text-accent' : 'text-spice-light'}>صحتين</span>
                 <span className="block text-sm mt-1 font-normal opacity-80">وجبتك فريش</span>
               </span>
               <span className="absolute -bottom-1 right-0 w-full h-0.5 bg-accent scale-x-0 group-hover:scale-x-100 transition-transform origin-right"></span>
@@ -82,11 +81,11 @@ const Navbar = () => {
             </a>
             <div className="flex items-center gap-4">
               <a 
-                href="tel:01017812946"
+                href="tel:01030557250"
                 className={`flex items-center gap-2 font-medium transition-colors ${isScrolled ? 'text-primary' : 'text-white'}`}
               >
                 <Phone size={18} />
-                01017812946
+                01030557250
               </a>
               <Button 
                 onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
@@ -149,11 +148,11 @@ const Navbar = () => {
                   اطلب الآن
                 </a>
                 <a 
-                  href="tel:01017812946"
+                  href="tel:01030557250"
                   className="flex items-center gap-2 font-medium py-2 text-primary"
                 >
                   <Phone size={18} />
-                  01017812946
+                  01030557250
                 </a>
                 <Button 
                   onClick={() => {

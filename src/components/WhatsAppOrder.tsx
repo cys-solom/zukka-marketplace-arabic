@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
@@ -33,7 +32,6 @@ interface FormData {
 }
 
 const validateEgyptianPhoneNumber = (phone: string): boolean => {
-  // Egyptian phone number format validation (simplified)
   const egyptianPhoneRegex = /^(01)[0-9]{9}$/;
   return egyptianPhoneRegex.test(phone.replace(/\s+/g, ''));
 };
@@ -51,7 +49,6 @@ const WhatsAppOrder = () => {
   const [activeTab, setActiveTab] = useState<'whatsapp' | 'phone'>('whatsapp');
   const { toast } = useToast();
 
-  // Animation on scroll detection
   useEffect(() => {
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -76,7 +73,6 @@ const WhatsAppOrder = () => {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     
-    // Clear errors when user types
     if (name === 'phoneNumber') {
       setPhoneError(null);
     }
@@ -88,7 +84,6 @@ const WhatsAppOrder = () => {
     e.preventDefault();
     setIsLoading(true);
 
-    // Validate required fields
     if (!formData.fullName || !formData.phoneNumber || !formData.orderDetails) {
       toast({
         title: "خطأ في النموذج",
@@ -99,7 +94,6 @@ const WhatsAppOrder = () => {
       return;
     }
 
-    // Validate phone number format
     if (!validateEgyptianPhoneNumber(formData.phoneNumber)) {
       setPhoneError("يرجى إدخال رقم هاتف صحيح");
       toast({
@@ -111,16 +105,14 @@ const WhatsAppOrder = () => {
       return;
     }
 
-    // Handle different actions based on selected tab
     if (activeTab === 'whatsapp') {
-      // Format WhatsApp message
       const message = `📦 طلب جديد:%0A
 - الاسم: ${formData.fullName}%0A
 - رقم الجوال: ${formData.phoneNumber}%0A
 ${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` : ''}
 - تفاصيل الطلب: ${formData.orderDetails}%0A`;
 
-      const whatsappNumber = '201017812946'; // The phone number specified in requirements
+      const whatsappNumber = '201030557250';
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
       
       setTimeout(() => {
@@ -140,8 +132,7 @@ ${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` :
         });
       }, 800);
     } else {
-      // Phone call option
-      const phoneNumber = '01017812946';
+      const phoneNumber = '01030557250';
       window.location.href = `tel:${phoneNumber}`;
       setIsLoading(false);
       
@@ -181,13 +172,11 @@ ${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` :
         background: "linear-gradient(135deg, #f8f8f8 0%, #e8f4ea 100%)"
       }}
     >
-      {/* Modern background elements */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
       </div>
       
-      {/* Subtle pattern overlay */}
       <div 
         className="absolute inset-0 opacity-5 pointer-events-none" 
         style={{
@@ -327,7 +316,7 @@ ${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` :
                   {activeTab === 'whatsapp' ? (
                     <>سيتم تحويلك إلى تطبيق واتساب لإكمال طلبك</>
                   ) : (
-                    <>سيتم الاتصال بالرقم: 01017812946</>
+                    <>سيتم الاتصال بالرقم: 01030557250</>
                   )}
                 </motion.div>
               </form>
@@ -336,7 +325,6 @@ ${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` :
         </motion.div>
       </div>
       
-      {/* Sticky order button (visible only on mobile) */}
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 md:hidden animate-float">
         <Button 
           onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
