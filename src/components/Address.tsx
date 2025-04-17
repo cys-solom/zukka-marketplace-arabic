@@ -1,4 +1,3 @@
-
 import { MapPin, Clock, Phone } from 'lucide-react';
 import { Card, CardContent } from "@/components/ui/card";
 import { motion } from "framer-motion";
@@ -124,11 +123,11 @@ const Address = () => {
                   يسعدنا استقبال اتصالاتكم وطلباتكم
                 </p>
                 <a 
-                  href="tel:01017812946"
+                  href="tel:01030557250"
                   className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-accent transition-colors duration-300 flex items-center justify-center gap-2 font-bold"
                 >
                   <Phone size={18} />
-                  01017812946
+                  01030557250
                 </a>
               </CardContent>
             </Card>
