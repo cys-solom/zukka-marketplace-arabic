@@ -32,7 +32,7 @@ const Footer = () => {
   return (
     <footer 
       id="contact" 
-      className="relative bg-gradient-to-b from-primary via-primary/90 to-primary-dark text-white overflow-hidden"
+      className="relative bg-gradient-to-b from-meat-dark/80 via-primary/70 to-spice-dark/80 text-white overflow-hidden"
       style={{
         clipPath: 'polygon(0 5%, 100% 0, 100% 100%, 0 100%)',
         borderTop: '1px solid rgba(255,255,255,0.1)'
