@@ -1,3 +1,4 @@
+
 import { Phone, MapPin, Clock, Instagram, Facebook, Mail, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -29,12 +30,28 @@ const Footer = () => {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer id="contact" className="relative bg-gradient-to-b from-primary via-primary to-primary-dark text-white overflow-hidden">
+    <footer 
+      id="contact" 
+      className="relative bg-gradient-to-b from-primary via-primary/90 to-primary-dark text-white overflow-hidden"
+      style={{
+        clipPath: 'polygon(0 5%, 100% 0, 100% 100%, 0 100%)',
+        borderTop: '1px solid rgba(255,255,255,0.1)'
+      }}
+    >
       <div 
         className="absolute inset-0 opacity-10" 
         style={{
           backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
           backgroundRepeat: "repeat"
+        }}
+      ></div>
+
+      {/* Soft curved overlay for smoother transition */}
+      <div 
+        className="absolute top-0 left-0 right-0 h-12 bg-background" 
+        style={{
+          clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0 50%)',
+          zIndex: 0
         }}
       ></div>
 
