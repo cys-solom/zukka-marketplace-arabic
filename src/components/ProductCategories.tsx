@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { Beef, UtensilsCrossed, Soup } from 'lucide-react';
 import { Button } from "@/components/ui/button";
@@ -26,17 +25,7 @@ const categories = [
     color: 'bg-spice-light',
     accent: 'text-spice-dark',
     buttonBg: 'bg-spice-dark'
-  },
-  {
-    id: 'tools',
-    title: 'أدوات المطبخ',
-    description: 'كل ما تحتاجه من أدوات وملحقات المطبخ عالية الجودة، من سكاكين وأواني وأدوات تقطيع وتقديم.',
-    image: 'https://images.unsplash.com/photo-1545015451-f05567aa6bcc?q=80&w=2069&auto=format&fit=crop',
-    icon: UtensilsCrossed,
-    color: 'bg-tool-light',
-    accent: 'text-tool-dark',
-    buttonBg: 'bg-tool-dark'
-  },
+  }
 ];
 
 const ProductCategories = () => {
@@ -95,7 +84,7 @@ const ProductCategories = () => {
         
         <motion.div 
           ref={ref} 
-          className="grid md:grid-cols-3 gap-8 lg:gap-12"
+          className="grid md:grid-cols-2 gap-8 lg:gap-12"
           variants={containerVariants}
           initial="hidden"
           animate={inView ? "visible" : "hidden"}

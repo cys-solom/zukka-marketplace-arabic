@@ -1,4 +1,3 @@
-
 import { Phone, MapPin, Clock, Instagram, Facebook, Mail, ArrowUp } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
@@ -46,7 +45,6 @@ const Footer = () => {
         }}
       ></div>
 
-      {/* Soft curved overlay for smoother transition */}
       <div 
         className="absolute top-0 left-0 right-0 h-12 bg-background" 
         style={{
@@ -69,10 +67,12 @@ const Footer = () => {
           <div>
             <h3 className="text-3xl font-bold mb-6 font-cairo">
               <span className="text-spice-light">صحتين</span>
-              <span className="block text-lg mt-1 font-normal text-white/80">وجبتك فريش</span>
+              <span className="block text-lg mt-1 font-normal text-white/80 font-tajawal">
+                Fast Food
+              </span>
             </h3>
             <p className="text-white/80 leading-relaxed mb-6">
-              نقدم أفضل اللحوم والبهارات وأدوات المطبخ بجودة عالية وأسعار مناسبة. جميع منتجاتنا طازجة ومختارة بعناية.
+              نقدم أفضل اللحوم والبهارات بجودة عالية وأسعار مناسبة. جميع منتجاتنا طازجة ومختارة بعناية.
             </p>
             <div className="flex space-x-4 space-x-reverse">
               <a 
@@ -135,7 +135,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
                 <span className="text-white/80">
-                  شارع الملك فهد، حي العليا، الرياض
+                  شارع الثورة، مدينة 6 أكتوبر، الجيزة
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -161,15 +161,6 @@ const Footer = () => {
                   </a>
                   <p className="text-white/60 text-sm">واتساب للطلبات والاستفسارات</p>
                 </div>
-              </li>
-              <li className="flex items-start gap-3">
-                <Mail size={18} className="mt-1 shrink-0 text-accent" />
-                <a 
-                  href="mailto:info@example.com" 
-                  className="text-white/80 hover:text-white transition-colors"
-                >
-                  info@example.com
-                </a>
               </li>
               <li className="flex items-start gap-3 mt-6">
                 <span className="text-white/80">
