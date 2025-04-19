@@ -35,7 +35,7 @@ const Navbar = () => {
           }} className="relative">
               <span className={`font-cairo ${isScrolled ? 'text-primary' : 'text-white'}`}>
                 <span className="">صحتين</span>
-                <span className="block text-sm mt-1 font-normal text-white font-cairo tracking-wide">
+                <span className={`block text-sm mt-1 font-bold tracking-wide ${isScrolled ? 'text-foreground' : 'text-white'}`}>
                   Fast Food
                 </span>
               </span>
