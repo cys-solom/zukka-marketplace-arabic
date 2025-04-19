@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Phone } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -34,7 +35,7 @@ const Navbar = () => {
           }} className="relative">
               <span className={`font-cairo ${isScrolled ? 'text-primary' : 'text-white'}`}>
                 <span className="">صحتين</span>
-                <span className="block text-sm mt-1 font-normal text-gray-600 font-tajawal tracking-wide">
+                <span className="block text-sm mt-1 font-normal text-white font-cairo tracking-wide">
                   Fast Food
                 </span>
               </span>
