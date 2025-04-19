@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { Menu, X, ShoppingCart, Phone } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
-
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -20,7 +19,6 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
-
   return <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled ? 'py-2 bg-background/95 backdrop-blur-lg shadow-lg' : 'py-4 bg-transparent'}`}>
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center">
@@ -35,7 +33,7 @@ const Navbar = () => {
             duration: 0.5
           }} className="relative">
               <span className={`font-cairo ${isScrolled ? 'text-primary' : 'text-white'}`}>
-                <span className={isScrolled ? 'text-accent' : 'text-spice-light'}>ص��تين</span>
+                <span className="">صحتين</span>
                 <span className="block text-sm mt-1 font-normal text-gray-600 font-tajawal tracking-wide">
                   Fast Food
                 </span>
