@@ -135,7 +135,7 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
                 <span className="text-white/80">
-                  شارع الثورة، مدينة 6 أكتوبر، الجيزة
+                  6 أكتوبر
                 </span>
               </li>
               <li className="flex items-start gap-3">
