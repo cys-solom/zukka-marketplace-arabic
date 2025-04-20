@@ -135,7 +135,10 @@ const Footer = () => {
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
                 <span className="text-white/80">
-                  6 أكتوبر
+                   الفرع الاول - الشرقية 
+                  
+                  الفرع الثاني - 6 أكتوبر 
+
                 </span>
               </li>
               <li className="flex items-start gap-3">
@@ -164,7 +167,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3 mt-6">
                 <span className="text-white/80">
-                  صاحبة المتجر: علياء شوقي
+                  صاحبة المتجر : علياء شوقي
                 </span>
               </li>
             </ul>
