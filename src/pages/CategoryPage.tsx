@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { ShoppingCart, Plus, Minus, ChevronLeft } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -127,8 +127,8 @@ const CategoryPage = () => {
               <ChevronLeft size={20} className="ml-1" />
               <span>العودة للصفحة الرئيسية</span>
             </Link>
-            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-cairo">{category.name}</h1>
-            <p className="text-lg text-white/90 mb-8">{category.description}</p>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-tajawal">{category.name}</h1>
+            <p className="text-lg text-white/90 mb-8 font-cairo">{category.description}</p>
           </motion.div>
         </div>
       </section>
@@ -145,31 +145,42 @@ const CategoryPage = () => {
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {category.products.map((product) => (
                 <motion.div key={product.id} variants={itemVariants}>
-                  <Card className="overflow-hidden hover:shadow-lg transition-shadow duration-300 border-none">
-                    <div className="relative h-48 overflow-hidden">
+                  <Card className="overflow-hidden hover:shadow-xl transition-all duration-300 border-none group">
+                    <div className="relative h-52 overflow-hidden">
                       <img 
                         src={product.image} 
                         alt={product.name} 
-                        className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute top-2 left-2">
+                      <div className="absolute top-2 left-2 space-x-2">
                         {product.isNew && (
                           <span className="bg-accent text-white text-xs font-bold px-2 py-1 rounded-md">
                             جديد
                           </span>
                         )}
                       </div>
+                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+                        <Button 
+                          onClick={() => addToCart(product)} 
+                          variant="default"
+                          size="lg"
+                          className="bg-white text-primary hover:bg-primary hover:text-white transition-colors duration-300"
+                        >
+                          <Plus size={18} className="ml-1" />
+                          إضافة للسلة
+                        </Button>
+                      </div>
                     </div>
                     <CardContent className="p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="font-bold text-lg">{product.name}</h3>
-                        <div className="font-bold text-primary">{product.price} ج.م</div>
+                      <div className="flex justify-between items-start">
+                        <h3 className="font-bold text-lg font-tajawal">{product.name}</h3>
+                        <div className="font-bold text-primary text-lg">{product.price} ج.م</div>
                       </div>
-                      <p className="text-muted-foreground text-sm mb-4">{product.description}</p>
+                      <p className="text-muted-foreground text-sm mb-3 line-clamp-2 h-10">{product.description}</p>
                       <Button 
                         onClick={() => addToCart(product)} 
                         variant="secondary"
-                        className="w-full hover:bg-primary hover:text-white transition-colors"
+                        className="w-full mt-2 hover:bg-primary hover:text-white transition-colors"
                       >
                         <Plus size={18} className="ml-1" />
                         إضافة للسلة
@@ -183,10 +194,10 @@ const CategoryPage = () => {
           
           {/* Cart Sidebar */}
           <div className="md:w-96 md:order-last order-first">
-            <div className={`md:sticky top-24 transition-all duration-300 ease-in-out ${isCartOpen ? 'opacity-100' : 'opacity-90 hover:opacity-100'}`}>
+            <div className="md:sticky top-24 transition-all duration-300 ease-in-out">
               <Card className="border-none shadow-xl overflow-hidden">
                 <div className="bg-primary text-white p-4 flex justify-between items-center">
-                  <h2 className="text-xl font-bold">سلة الطلبات</h2>
+                  <h2 className="text-xl font-bold font-tajawal">سلة الطلبات</h2>
                   <Button 
                     variant="ghost" 
                     size="icon" 
@@ -195,14 +206,14 @@ const CategoryPage = () => {
                   >
                     <ShoppingCart />
                     {cart.length > 0 && (
-                      <span className="absolute top-0 right-0 bg-accent rounded-full w-5 h-5 flex items-center justify-center text-xs">
+                      <span className="absolute top-0 right-0 bg-accent rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">
                         {cart.reduce((total, item) => total + item.quantity, 0)}
                       </span>
                     )}
                   </Button>
                 </div>
                 
-                <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isCartOpen ? 'max-h-[40vh] overflow-y-auto' : 'max-h-0'}`}>
+                <div className={`transition-all duration-300 ease-in-out ${isCartOpen ? 'max-h-[40vh] overflow-y-auto' : 'max-h-0 overflow-hidden'}`}>
                   {cart.length > 0 ? (
                     <div className="divide-y">
                       {cart.map(item => (
@@ -214,24 +225,24 @@ const CategoryPage = () => {
                               className="w-16 h-16 rounded-md object-cover ml-3"
                             />
                             <div>
-                              <h3 className="font-medium">{item.name}</h3>
+                              <h3 className="font-medium font-tajawal">{item.name}</h3>
                               <p className="text-muted-foreground text-sm">{item.price} ج.م</p>
                             </div>
                           </div>
-                          <div className="flex items-center">
+                          <div className="flex items-center border rounded-lg overflow-hidden">
                             <Button 
-                              variant="outline" 
+                              variant="ghost" 
                               size="icon" 
-                              className="h-8 w-8 rounded-full"
+                              className="h-8 w-8 rounded-none"
                               onClick={() => removeFromCart(item.id)}
                             >
                               <Minus size={16} />
                             </Button>
-                            <span className="mx-2 w-8 text-center">{item.quantity}</span>
+                            <span className="w-8 text-center text-sm font-medium">{item.quantity}</span>
                             <Button 
-                              variant="outline" 
+                              variant="ghost" 
                               size="icon" 
-                              className="h-8 w-8 rounded-full"
+                              className="h-8 w-8 rounded-none"
                               onClick={() => addToCart(item)}
                             >
                               <Plus size={16} />
@@ -257,7 +268,7 @@ const CategoryPage = () => {
                     <div className="space-y-2">
                       <Button 
                         onClick={() => setShowOrderForm(true)} 
-                        className="w-full"
+                        className="w-full bg-green-600 hover:bg-green-700 text-white font-bold py-2"
                         disabled={cart.length === 0}
                       >
                         تأكيد الطلب

@@ -8,6 +8,12 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import CategoryPage from "./pages/CategoryPage";
 
+// Import fonts
+import "@fontsource/cairo/400.css";
+import "@fontsource/cairo/700.css";
+import "@fontsource/tajawal/400.css";
+import "@fontsource/tajawal/700.css";
+
 const queryClient = new QueryClient();
 
 const App = () => (
