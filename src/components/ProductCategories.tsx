@@ -1,125 +1,98 @@
-import { useState, useEffect } from 'react';
-import { Beef, UtensilsCrossed, Soup } from 'lucide-react';
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter } from "@/components/ui/card";
-import { motion } from "framer-motion";
-import { useInView } from 'react-intersection-observer';
 
-const categories = [
-  {
-    id: 'meat',
-    title: 'اللحوم الطازجة',
-    description: 'نقدم أجود أنواع اللحوم الطازجة المذبوحة على الطريقة الإسلامية، من لحوم الضأن والبقر بمختلف أنواعها وقطعياتها.',
-    image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop',
-    icon: Beef,
-    color: 'bg-meat-light',
-    accent: 'text-meat-dark',
-    buttonBg: 'bg-meat-dark'
-  },
-  {
-    id: 'meals',
-    title: 'الوجبات الجاهزة',
-    description: 'وجبات جاهزة شهية محضرة بعناية من أجود المكونات الطازجة، مثالية للعائلة والضيوف وبنكهات أصيلة ومميزة.',
-    image: 'https://images.unsplash.com/photo-1547928576-a4a33237cbc3?q=80&w=2070&auto=format&fit=crop',
-    icon: Soup,
-    color: 'bg-spice-light',
-    accent: 'text-spice-dark',
-    buttonBg: 'bg-spice-dark'
-  }
-];
+import { useState, useEffect } from 'react';
+import { motion, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { Link } from 'react-router-dom';
+import { Card, CardContent } from "@/components/ui/card";
+import { productCategories } from '@/data/productData';
 
 const ProductCategories = () => {
   const [ref, inView] = useInView({
-    triggerOnce: false,
+    triggerOnce: true,
     threshold: 0.1,
   });
-
+  
+  const [isVisible, setIsVisible] = useState(false);
+  const controls = useAnimation();
+  
+  useEffect(() => {
+    if (inView) {
+      setIsVisible(true);
+      controls.start("visible");
+    }
+  }, [controls, inView]);
+  
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: { 
+    visible: {
       opacity: 1,
-      transition: { 
-        duration: 0.6,
-        staggerChildren: 0.2
-      }
-    }
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
-
+  
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
-    }
+      transition: {
+        duration: 0.6,
+      },
+    },
   };
-
+  
   return (
-    <section id="products" className="py-24 relative">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-secondary/80 to-transparent -z-10"></div>
-      <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-secondary/80 to-transparent -z-10"></div>
-      
-      {/* Subtle background pattern */}
-      <div 
-        className="absolute inset-0 opacity-5 -z-20" 
-        style={{
-          backgroundImage: "url('https://www.transparenttextures.com/patterns/food.png')",
-          backgroundRepeat: "repeat"
-        }}
-      ></div>
+    <section id="categories" className="py-24 relative overflow-hidden bg-secondary/50">
+      <div className="absolute inset-0 opacity-5 pointer-events-none" 
+           style={{
+             backgroundImage: "url('https://www.transparenttextures.com/patterns/food.png')",
+             backgroundRepeat: "repeat"
+           }}></div>
       
       <div className="container mx-auto px-4">
-        <motion.div 
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="section-title text-center mx-auto">منتجاتنا المميزة</h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            نقدم لكم مجموعة متنوعة من اللحوم والوجبات الجاهزة عالية الجودة بأسعار تنافسية
+        <div className="text-center mb-16">
+          <h2 className="section-title">فئات المنتجات</h2>
+          <p className="text-lg text-muted-foreground max-w-3xl mx-auto">
+            اكتشف مجموعتنا المتنوعة من المنتجات الطازجة عالية الجودة. من اللحوم الطازجة إلى الوجبات السريعة الشهية.
           </p>
-        </motion.div>
+        </div>
         
-        <motion.div 
-          ref={ref} 
-          className="grid md:grid-cols-2 gap-8 lg:gap-12"
+        <motion.div
+          ref={ref}
           variants={containerVariants}
           initial="hidden"
-          animate={inView ? "visible" : "hidden"}
+          animate={controls}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
         >
-          {categories.map((category) => (
+          {productCategories.map((category) => (
             <motion.div key={category.id} variants={itemVariants}>
-              <Card className="overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
-                <div className="h-64 relative overflow-hidden group">
-                  <img 
-                    src={category.image} 
-                    alt={category.title} 
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
-                  <div className="absolute bottom-0 right-0 p-4 w-full">
-                    <div className="flex items-center gap-3">
-                      <div className={`p-2 rounded-full ${category.color}`}>
-                        <category.icon className={category.accent} size={24} />
-                      </div>
-                      <h3 className="text-2xl font-bold text-white">{category.title}</h3>
+              <Link to={`/category/${category.id}`} className="block h-full">
+                <Card className="category-card h-full overflow-hidden hover:border-primary/30 border-transparent border-2 transition-colors duration-300">
+                  <div 
+                    className="h-48 overflow-hidden relative"
+                    style={{
+                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(${category.backgroundImage})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center'
+                    }}
+                  >
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent"></div>
+                    <div className="absolute bottom-0 right-0 p-4 text-white">
+                      <div className="font-bold text-3xl mb-1">{category.icon}</div>
+                      <h3 className="text-2xl font-bold">{category.name}</h3>
                     </div>
                   </div>
-                </div>
-                <CardContent className="pt-6 flex-grow">
-                  <p className="text-foreground/80 text-lg">{category.description}</p>
-                </CardContent>
-                <CardFooter className="pt-0 pb-6">
-                  <Button 
-                    className={`w-full text-white ${category.buttonBg} hover:opacity-90 transition-all duration-300 transform hover:scale-[1.02]`}
-                    onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
-                  >
-                    اطلب الآن
-                  </Button>
-                </CardFooter>
-              </Card>
+                  <CardContent className="p-6">
+                    <p className="text-foreground/80">{category.description}</p>
+                    <div className="mt-6 flex justify-between items-center">
+                      <span className="text-sm text-muted-foreground">{category.products.length} منتج</span>
+                      <span className="text-primary font-medium hover:underline">عرض المنتجات</span>
+                    </div>
+                  </CardContent>
+                </Card>
+              </Link>
             </motion.div>
           ))}
         </motion.div>
