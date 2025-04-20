@@ -15,6 +15,46 @@ export const productCategories = [
         image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
         isNew: false
       },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        isNew: false
+      },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        isNew: false
+      },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        isNew: false
+      },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        isNew: false
+      },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        isNew: false
+      },
       {
         id: "meat-2",
         name: "ستيك لحم بقري",
