@@ -32,7 +32,6 @@ const Address = () => {
 
   return (
     <section id="address" className="py-24 relative">
-      {/* Modern gradient background */}
       <div 
         className="absolute inset-0 -z-10"
         style={{
@@ -40,7 +39,6 @@ const Address = () => {
         }}
       ></div>
       
-      {/* Subtle pattern overlay */}
       <div 
         className="absolute inset-0 opacity-5 -z-10" 
         style={{
@@ -58,7 +56,7 @@ const Address = () => {
         >
           <h2 className="section-title text-center mx-auto">فروعنا وخدمة التوصيل</h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            نخدمكم في فرعينا ونوصل طلباتكم إلى أي مكان
+            نخدمكم في فروعنا ونوصل طلباتكم إلى أي مكان
           </p>
         </motion.div>
         
@@ -69,7 +67,7 @@ const Address = () => {
           animate={inView ? "visible" : "hidden"}
           className="grid md:grid-cols-3 gap-8"
         >
-          {/* الفرع الأول - الشرقية */}
+          {/* الفرع الأول */}
           <motion.div variants={itemVariants}>
             <Card className="h-full shadow-lg hover:shadow-xl transition-all duration-300 border-none overflow-hidden group">
               <div className="h-2 bg-primary group-hover:bg-accent transition-colors duration-300"></div>
@@ -77,24 +75,22 @@ const Address = () => {
                 <div className="mb-6 w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center transform transition-transform group-hover:scale-110 duration-300">
                   <MapPin className="text-primary" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-primary">فرع الشرقية</h3>
+                <h3 className="text-2xl font-bold mb-4 text-primary">الفرع الأول</h3>
                 <p className="text-foreground/80 text-lg mb-4">
-                  شارع الزقازيق الرئيسي<br />
-                  بجوار مسجد التوحيد
+                  فرع رئيسي<br />
+                  بموقع مميز في المنطقة
                 </p>
                 <a 
-                  href="https://maps.app.goo.gl/example1" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                  href="#" 
                   className="mt-4 text-primary hover:text-accent underline transition-colors duration-300"
                 >
-                  الاتجاهات على الخريطة
+                  عرض الموقع
                 </a>
               </CardContent>
             </Card>
           </motion.div>
           
-          {/* الفرع الثاني - 6 أكتوبر */}
+          {/* الفرع الثاني */}
           <motion.div variants={itemVariants}>
             <Card className="h-full shadow-lg hover:shadow-xl transition-all duration-300 border-none overflow-hidden group">
               <div className="h-2 bg-primary group-hover:bg-accent transition-colors duration-300"></div>
@@ -102,18 +98,16 @@ const Address = () => {
                 <div className="mb-6 w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center transform transition-transform group-hover:scale-110 duration-300">
                   <MapPin className="text-primary" size={32} />
                 </div>
-                <h3 className="text-2xl font-bold mb-4 text-primary">فرع 6 أكتوبر</h3>
+                <h3 className="text-2xl font-bold mb-4 text-primary">الفرع الثاني</h3>
                 <p className="text-foreground/80 text-lg mb-4">
-                  المحور المركزي<br />
-                  مول سيتي ستارز
+                  فرع فرعي<br />
+                  في موقع آخر مميز
                 </p>
                 <a 
-                  href="https://maps.app.goo.gl/example2" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
+                  href="#" 
                   className="mt-4 text-primary hover:text-accent underline transition-colors duration-300"
                 >
-                  الاتجاهات على الخريطة
+                  عرض الموقع
                 </a>
               </CardContent>
             </Card>
@@ -129,8 +123,8 @@ const Address = () => {
                 </div>
                 <h3 className="text-2xl font-bold mb-4 text-accent">خدمة التوصيل</h3>
                 <p className="text-foreground/80 text-lg mb-4">
-                  نوصل طلباتكم إلى جميع مناطق<br />
-                  الشرقية و6 أكتوبر والمناطق المجاورة
+                  نوصل طلباتكم إلى أي مكان<br />
+                  داخل نطاق خدمتنا
                 </p>
                 <div className="mt-4 space-y-2">
                   <p className="text-sm text-foreground/70">
