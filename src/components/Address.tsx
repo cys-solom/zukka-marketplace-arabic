@@ -115,9 +115,7 @@ const Address = () => {
                   الشرقية و6 أكتوبر والمناطق المجاورة
                 </p>
                 <div className="mt-4 space-y-2">
-                  <p className="text-sm text-foreground/70">
-                    التوصيل مجاني للطلبات فوق 200 جنيه
-                  </p>
+                  <p className="text-sm text-foreground/70">متوسط وقت التوصيل : 40-60 دقيقة </p>
                   <p className="text-sm text-foreground/70"></p>
                 </div>
               </CardContent>
