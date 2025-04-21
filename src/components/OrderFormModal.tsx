@@ -51,7 +51,7 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
   const onSubmit = async (data: FormValues) => {
     try {
       setIsSubmitting(true);
-      
+
       // Validate Egyptian phone number
       if (!validateEgyptianPhoneNumber(data.phone)) {
         toast({
@@ -67,24 +67,24 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
         `• ${item.name} - ${item.quantity} × ${item.price.toFixed(2)} ج.م = ${(item.quantity * item.price).toFixed(2)} ج.م`
       ).join("%0A");
       
-      // Create structured WhatsApp message
+      // Create structured WhatsApp message with proper encoding
       const messageParts = [
         "📦 *طلب جديد من زوكا ماركت*",
         "",
         "👤 *معلومات العميل:*",
-        `الاسم: ${data.name}`,
-        `العنوان: ${data.address}`,
+        `الاسم: ${encodeURIComponent(data.name)}`,
+        `العنوان: ${encodeURIComponent(data.address)}`,
         `رقم الهاتف: ${data.phone}`,
         "",
         "🛒 *تفاصيل الطلب:*",
         formattedCartItems,
         "",
         `💰 *المجموع:* ${total.toFixed(2)} ج.م`,
-        ...(data.notes ? ["", `ملاحظات: ${data.notes}`] : [])
+        ...(data.notes ? ["", `ملاحظات: ${encodeURIComponent(data.notes)}`] : [])
       ];
       
       const message = messageParts.join("%0A");
-      const whatsappNumber = '201030557250'; // استبدل برقم واتساب التجاري
+      const whatsappNumber = '201030557250'; // Replace with your WhatsApp business number
       const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
       
       // Show success toast
@@ -93,11 +93,11 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
         description: "جارٍ تحويلك إلى واتساب لإرسال الطلب...",
       });
       
-      // Delay redirect to allow toast to be visible
+      // Use window.location.href instead of window.open for better reliability
       setTimeout(() => {
-        window.open(whatsappUrl, '_blank');
+        window.location.href = whatsappUrl;
         onComplete();
-      }, 1500);
+      }, 1000);
       
     } catch (error) {
       toast({
