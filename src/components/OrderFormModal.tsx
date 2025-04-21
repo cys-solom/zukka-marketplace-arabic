@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from "react-hook-form";
@@ -49,48 +48,66 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
     }
   });
   
-  const onSubmit = (data: FormValues) => {
-    // Validate Egyptian phone number
-    if (!validateEgyptianPhoneNumber(data.phone)) {
+  const onSubmit = async (data: FormValues) => {
+    try {
+      setIsSubmitting(true);
+      
+      // Validate Egyptian phone number
+      if (!validateEgyptianPhoneNumber(data.phone)) {
+        toast({
+          title: "خطأ في رقم الهاتف",
+          description: "يرجى إدخال رقم هاتف مصري صحيح (يبدأ بـ 01 ويتكون من 11 رقمًا)",
+          variant: "destructive"
+        });
+        return;
+      }
+      
+      // Format cart items for WhatsApp message
+      const formattedCartItems = cart.map(item => 
+        `• ${item.name} - ${item.quantity} × ${item.price.toFixed(2)} ج.م = ${(item.quantity * item.price).toFixed(2)} ج.م`
+      ).join("%0A");
+      
+      // Create structured WhatsApp message
+      const messageParts = [
+        "📦 *طلب جديد من زوكا ماركت*",
+        "",
+        "👤 *معلومات العميل:*",
+        `الاسم: ${data.name}`,
+        `العنوان: ${data.address}`,
+        `رقم الهاتف: ${data.phone}`,
+        "",
+        "🛒 *تفاصيل الطلب:*",
+        formattedCartItems,
+        "",
+        `💰 *المجموع:* ${total.toFixed(2)} ج.م`,
+        ...(data.notes ? ["", `ملاحظات: ${data.notes}`] : [])
+      ];
+      
+      const message = messageParts.join("%0A");
+      const whatsappNumber = '201030557250'; // استبدل برقم واتساب التجاري
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+      
+      // Show success toast
       toast({
-        title: "خطأ في رقم الهاتف",
-        description: "يرجى إدخال رقم هاتف مصري صحيح",
+        title: "تم إعداد طلبك بنجاح!",
+        description: "جارٍ تحويلك إلى واتساب لإرسال الطلب...",
+      });
+      
+      // Delay redirect to allow toast to be visible
+      setTimeout(() => {
+        window.open(whatsappUrl, '_blank');
+        onComplete();
+      }, 1500);
+      
+    } catch (error) {
+      toast({
+        title: "حدث خطأ",
+        description: "فشل في إرسال الطلب، يرجى المحاولة مرة أخرى",
         variant: "destructive"
       });
-      return;
-    }
-    
-    setIsSubmitting(true);
-    
-    // Create WhatsApp message
-    const cartItems = cart.map(item => 
-      `* ${item.name} - ${item.quantity} × ${item.price} ج.م = ${(item.quantity * item.price).toFixed(2)} ج.م`
-    ).join("%0A");
-    
-    const message = `📦 *طلب جديد من زوكا ماركت*%0A%0A` +
-      `👤 *معلومات العميل:*%0A` +
-      `الاسم: ${data.name}%0A` +
-      `العنوان: ${data.address}%0A` +
-      `رقم الهاتف: ${data.phone}%0A%0A` +
-      `🛒 *تفاصيل الطلب:*%0A${cartItems}%0A%0A` +
-      `💰 *المجموع:* ${total.toFixed(2)} ج.م%0A%0A` +
-      `${data.notes ? `ملاحظات: ${data.notes}%0A%0A` : ''}`;
-    
-    // WhatsApp number - replace with your business number
-    const whatsappNumber = '201030557250';
-    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
-    
-    // Give time for toast to appear before redirecting
-    toast({
-      title: "تم إعداد طلبك!",
-      description: "جاري تحويلك لإرسال الطلب عبر واتساب...",
-    });
-    
-    setTimeout(() => {
-      window.open(whatsappUrl, '_blank');
+    } finally {
       setIsSubmitting(false);
-      onComplete();
-    }, 1500);
+    }
   };
 
   return (
@@ -106,8 +123,9 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
           <Button 
             variant="ghost" 
             size="icon" 
-            className="absolute left-2 top-2 text-muted-foreground"
+            className="absolute left-2 top-2 text-muted-foreground hover:bg-secondary"
             onClick={onCancel}
+            aria-label="إغلاق النموذج"
           >
             <X size={18} />
           </Button>
@@ -122,15 +140,22 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
               <FormField
                 control={form.control}
                 name="name"
-                rules={{ required: "هذا الحقل مطلوب" }}
+                rules={{ 
+                  required: "هذا الحقل مطلوب",
+                  minLength: {
+                    value: 3,
+                    message: "يجب أن يكون الاسم مكون من 3 أحرف على الأقل"
+                  }
+                }}
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="font-cairo">الاسم بالكامل</FormLabel>
+                    <FormLabel className="font-cairo">الاسم بالكامل *</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="أدخل اسمك" 
+                        placeholder="أدخل اسمك بالكامل" 
                         {...field}
                         className="border-2 focus:border-primary transition-colors"
+                        autoComplete="name"
                       />
                     </FormControl>
                     <FormMessage />
@@ -141,15 +166,22 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
               <FormField
                 control={form.control}
                 name="address"
-                rules={{ required: "هذا الحقل مطلوب" }}
+                rules={{ 
+                  required: "هذا الحقل مطلوب",
+                  minLength: {
+                    value: 10,
+                    message: "يجب أن يحتوي العنوان على 10 أحرف على الأقل"
+                  }
+                }}
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="font-cairo">العنوان</FormLabel>
+                    <FormLabel className="font-cairo">العنوان التفصيلي *</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="أدخل عنوانك بالتفصيل" 
+                        placeholder="الحي، الشارع، رقم المبني، الطابق..." 
                         {...field}
                         className="border-2 focus:border-primary transition-colors"
+                        autoComplete="address-line1"
                       />
                     </FormControl>
                     <FormMessage />
@@ -164,18 +196,20 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                   required: "هذا الحقل مطلوب",
                   pattern: {
                     value: /^(01)[0-9]{9}$/,
-                    message: "يرجى إدخال رقم هاتف مصري صحيح"
+                    message: "يجب أن يبدأ رقم الهاتف بـ 01 ويتكون من 11 رقمًا"
                   }
                 }}
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="font-cairo">رقم الهاتف</FormLabel>
+                    <FormLabel className="font-cairo">رقم الهاتف *</FormLabel>
                     <FormControl>
                       <Input 
-                        placeholder="مثال: 01xxxxxxxxx" 
+                        placeholder="مثال: 01234567890" 
                         dir="ltr"
+                        type="tel"
                         {...field}
                         className="border-2 focus:border-primary transition-colors"
+                        autoComplete="tel"
                       />
                     </FormControl>
                     <FormMessage />
@@ -188,10 +222,10 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                 name="notes"
                 render={({ field }) => (
                   <FormItem className="space-y-2">
-                    <FormLabel className="font-cairo">ملاحظات (اختياري)</FormLabel>
+                    <FormLabel className="font-cairo">ملاحظات إضافية</FormLabel>
                     <FormControl>
                       <Textarea 
-                        placeholder="أي ملاحظات إضافية حول طلبك" 
+                        placeholder="أي متطلبات خاصة، تفاصيل توصيل، إلخ..." 
                         {...field}
                         className="resize-none min-h-[100px] border-2 focus:border-primary transition-colors"
                       />
@@ -206,22 +240,23 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                   {cart.map((item) => (
                     <div key={item.id} className="flex justify-between py-1 text-sm">
                       <span className="font-tajawal">{item.name} × {item.quantity}</span>
-                      <span>{(item.price * item.quantity).toFixed(2)} ج.م</span>
+                      <span className="font-medium">{(item.price * item.quantity).toFixed(2)} ج.م</span>
                     </div>
                   ))}
                   <div className="border-t mt-2 pt-2 font-bold flex justify-between">
                     <span>الإجمالي:</span>
-                    <span>{total.toFixed(2)} ج.م</span>
+                    <span className="text-primary">{total.toFixed(2)} ج.م</span>
                   </div>
                 </div>
                 
                 <Button 
                   type="submit" 
-                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-bold" 
+                  className="w-full bg-green-600 hover:bg-green-700 text-white py-3 font-bold transition-transform hover:scale-[1.01] active:scale-[0.99]" 
                   disabled={isSubmitting}
+                  aria-label="إرسال الطلب عبر واتساب"
                 >
                   <Send className="ml-2" size={18} />
-                  {isSubmitting ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
+                  {isSubmitting ? 'جارِ إرسال الطلب...' : 'إرسال الطلب عبر واتساب'}
                 </Button>
               </div>
             </form>
