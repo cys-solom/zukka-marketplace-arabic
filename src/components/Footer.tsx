@@ -136,7 +136,10 @@ const Footer = () => {
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
                 <span className="text-white/80">
                    الفرع الاول - الشرقية 
-                  
+
+                </span>
+                  <span className="text-white/80">
+           
                   الفرع الثاني - 6 أكتوبر 
 
                 </span>
