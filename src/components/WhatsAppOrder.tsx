@@ -94,10 +94,10 @@ const WhatsAppOrder = () => {
     }
 
     if (!validateEgyptianPhoneNumber(formData.phoneNumber)) {
-      setPhoneError("يرجى إدخال رقم هاتف صحيح");
+      setPhoneError("يرجى إدخال رقم هاتف صحيح (يبدأ بـ 01 ويتكون من 11 رقمًا)");
       toast({
         title: "خطأ في رقم الهاتف",
-        description: "يرجى إدخال رقم هاتف صحيح",
+        description: "يرجى إدخال رقم هاتف صحيح (يبدأ بـ 01 ويتكون من 11 رقمًا)",
         variant: "destructive"
       });
       setIsLoading(false);
@@ -105,18 +105,24 @@ const WhatsAppOrder = () => {
     }
 
     if (activeTab === 'whatsapp') {
-      const message = `📦 طلب جديد:%0A- الاسم: ${formData.fullName}%0A- رقم الجوال: ${formData.phoneNumber}%0A${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` : ''}- تفاصيل الطلب: ${formData.orderDetails}%0A`;
+      // بناء رسالة الواتساب مع تنسيق محسن
+      const message = `طلب جديد%0A%0A👤 الاسم: ${formData.fullName}%0A📞 رقم الهاتف: ${formData.phoneNumber}%0A${formData.email ? `📧 البريد الإلكتروني: ${formData.email}%0A` : ''}%0A📦 تفاصيل الطلب:%0A${formData.orderDetails.replace(/\n/g, '%0A')}%0A%0Aشكرًا لاختياركم!`;
+      
+      // إنشاء رابط واتساب مع تضمين الرسالة
       const whatsappUrl = `https://wa.me/201030557250?text=${message}`;
+      
+      // فتح الرابط في نافذة جديدة بعد تأخير بسيط
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
         setIsLoading(false);
         setFormData({ fullName: '', phoneNumber: '', email: '', orderDetails: '' });
         toast({
-          title: "تم إرسال الطلب بنجاح!",
-          description: "سيتم التواصل معك قريباً.",
+          title: "تم فتح واتساب بنجاح!",
+          description: "الرجاء إرسال الرسالة لتأكيد طلبك.",
         });
-      }, 800);
+      }, 500);
     } else {
+      // معالجة حالة الاتصال المباشر
       window.location.href = `tel:01030557250`;
       setIsLoading(false);
       toast({
@@ -190,11 +196,18 @@ const WhatsAppOrder = () => {
               <form onSubmit={handleSubmit} className="space-y-6">
                 <motion.div variants={itemVariants} className="space-y-1">
                   <Label htmlFor="fullName">الاسم الكامل *</Label>
-                  <Input id="fullName" name="fullName" value={formData.fullName} onChange={handleChange} className="w-full border-2 focus:border-primary p-3 rounded-md" required />
+                  <Input 
+                    id="fullName" 
+                    name="fullName" 
+                    value={formData.fullName} 
+                    onChange={handleChange} 
+                    className="w-full border-2 focus:border-primary p-3 rounded-md" 
+                    required 
+                  />
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <Label htmlFor="phoneNumber">ادخل رقم الجوال *</Label>
+                  <Label htmlFor="phoneNumber">رقم الجوال *</Label>
                   <Input
                     id="phoneNumber"
                     name="phoneNumber"
@@ -210,27 +223,47 @@ const WhatsAppOrder = () => {
 
                 <motion.div variants={itemVariants} className="space-y-1">
                   <Label htmlFor="email">البريد الإلكتروني (اختياري)</Label>
-                  <Input id="email" name="email" type="email" value={formData.email} onChange={handleChange} className="w-full border-2 focus:border-primary p-3 rounded-md" dir="ltr" />
+                  <Input 
+                    id="email" 
+                    name="email" 
+                    type="email" 
+                    value={formData.email} 
+                    onChange={handleChange} 
+                    className="w-full border-2 focus:border-primary p-3 rounded-md" 
+                    dir="ltr" 
+                  />
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="space-y-1">
                   <Label htmlFor="orderDetails">تفاصيل الطلب *</Label>
-                  <Textarea id="orderDetails" name="orderDetails" value={formData.orderDetails} onChange={handleChange} className="w-full min-h-[120px] border-2 focus:border-primary p-3 rounded-md" required />
+                  <Textarea 
+                    id="orderDetails" 
+                    name="orderDetails" 
+                    value={formData.orderDetails} 
+                    onChange={handleChange} 
+                    className="w-full min-h-[120px] border-2 focus:border-primary p-3 rounded-md" 
+                    placeholder="اكتب تفاصيل طلبك هنا..."
+                    required 
+                  />
                 </motion.div>
 
                 <motion.div variants={itemVariants}>
-                  <Button type="submit" className={`w-full py-6 text-white font-bold transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
-                    activeTab === 'whatsapp' ? 'bg-green-600 hover:bg-green-700' : 'bg-primary hover:bg-primary/90'
-                  }`} disabled={isLoading}>
+                  <Button 
+                    type="submit" 
+                    className={`w-full py-6 text-white font-bold transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
+                      activeTab === 'whatsapp' ? 'bg-green-600 hover:bg-green-700' : 'bg-primary hover:bg-primary/90'
+                    }`} 
+                    disabled={isLoading}
+                  >
                     {activeTab === 'whatsapp' ? (
                       <>
                         <WhatsappIcon className="ml-2" />
-                        {isLoading ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
+                        {isLoading ? 'جارِ التحضير...' : 'إرسال الطلب عبر واتساب'}
                       </>
                     ) : (
                       <>
                         <Phone size={20} className="ml-2" />
-                        {isLoading ? 'جارِ المعالجة...' : 'اتصل بنا مباشرة'}
+                        {isLoading ? 'جارِ التحضير...' : 'اتصل بنا مباشرة'}
                       </>
                     )}
                   </Button>
@@ -238,8 +271,8 @@ const WhatsAppOrder = () => {
 
                 <motion.div variants={itemVariants} className="text-center text-sm text-muted-foreground pt-2">
                   {activeTab === 'whatsapp'
-                    ? <>سيتم تحويلك إلى تطبيق واتساب لإكمال طلبك</>
-                    : <>سيتم الاتصال بالرقم: 01030557250</>
+                    ? 'سيتم فتح محادثة واتساب مع نص الطلب جاهزًا للإرسال'
+                    : 'سيتم الاتصال بالرقم: 01030557250'
                   }
                 </motion.div>
               </form>
@@ -249,7 +282,10 @@ const WhatsAppOrder = () => {
       </div>
 
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 md:hidden animate-float">
-        <Button onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({ behavior: 'smooth' })} className="whatsapp-btn rounded-full px-6 py-3 shadow-lg">
+        <Button 
+          onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({ behavior: 'smooth' })} 
+          className="whatsapp-btn rounded-full px-6 py-3 shadow-lg bg-green-600 hover:bg-green-700"
+        >
           <WhatsappIcon className="ml-2" />
           اطلب الآن
         </Button>
