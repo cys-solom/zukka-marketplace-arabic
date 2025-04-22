@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
@@ -93,6 +92,7 @@ const ProductCategories = () => {
           initial="hidden"
           animate={controls}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
+          id="products"
         >
           {productCategories.map((category) => (
             <motion.div key={category.id} variants={itemVariants}>
@@ -128,7 +128,7 @@ const ProductCategories = () => {
                     <p className="text-foreground/80 mb-6 line-clamp-2">{category.description}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">{category.products.length} منتج</span>
-                      <Link to={`/category/${category.id}`}>
+                      <Link to={`/category/${category.id}`} aria-label={`عرض منتجات ${category.name}`}>
                         <motion.div
                           variants={buttonVariants}
                           initial="rest"
@@ -153,4 +153,3 @@ const ProductCategories = () => {
 };
 
 export default ProductCategories;
-
