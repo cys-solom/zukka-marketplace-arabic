@@ -1,3 +1,4 @@
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useForm } from "react-hook-form";
@@ -6,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { 
   Form,
   FormControl,
@@ -114,8 +116,8 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
   };
 
   return (
-    <AnimatePresence>
-      <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 p-4">
+    <div className="fixed inset-0 bg-black/80 flex items-start justify-center z-50 p-4 overflow-y-auto">
+      <div className="min-h-[100dvh] py-8 flex items-center justify-center w-full">
         <motion.div 
           initial={{ opacity: 0, scale: 0.95 }}
           animate={{ opacity: 1, scale: 1 }}
@@ -139,7 +141,7 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
           </div>
           
           <Form {...form}>
-            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4">
+            <form onSubmit={form.handleSubmit(onSubmit)} className="p-6 space-y-4 max-h-[70vh] overflow-y-auto">
               <FormField
                 control={form.control}
                 name="name"
@@ -257,7 +259,7 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                       <Textarea 
                         placeholder="أي متطلبات خاصة، تعليمات توصيل، إلخ..." 
                         {...field}
-                        className="resize-none min-h-[100px] border-2 focus:border-primary transition-colors"
+                        className="resize-none min-h-[80px] border-2 focus:border-primary transition-colors"
                       />
                     </FormControl>
                   </FormItem>
@@ -293,7 +295,7 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
           </Form>
         </motion.div>
       </div>
-    </AnimatePresence>
+    </div>
   );
 };
 
