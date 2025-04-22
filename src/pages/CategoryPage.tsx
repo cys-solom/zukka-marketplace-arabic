@@ -1,4 +1,5 @@
-import { useState, useEffect, useMemo } from 'react';
+
+import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft } from 'lucide-react';
@@ -7,8 +8,6 @@ import { productCategories } from '@/data/productData';
 import ProductCard from '@/components/ProductCard';
 import CartSidebar from '@/components/CartSidebar';
 import OrderFormModal from '@/components/OrderFormModal';
-import ProductSearch from '@/components/ProductSearch';
-import FAQ from '@/components/FAQ';
 
 export type CartItem = {
   id: string;
@@ -24,8 +23,8 @@ const CategoryPage = () => {
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
   const [showOrderForm, setShowOrderForm] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
+  
+  // Find the current category
   const category = productCategories.find(cat => cat.id === categoryId);
   
   if (!category) {
@@ -82,14 +81,7 @@ const CategoryPage = () => {
     setShowOrderForm(false);
   };
   
-  const filteredProducts = useMemo(() => {
-    if (!category) return [];
-    return category.products.filter((product) =>
-      product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      product.description.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-  }, [category, searchQuery]);
-
+  // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: { 
@@ -131,8 +123,6 @@ const CategoryPage = () => {
       </section>
       
       <div className="container mx-auto px-4">
-        <ProductSearch onSearch={setSearchQuery} />
-        
         <div className="flex flex-col md:flex-row gap-8">
           {/* Products Grid */}
           <motion.div 
@@ -142,7 +132,7 @@ const CategoryPage = () => {
             className="flex-1"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredProducts.map((product) => (
+              {category.products.map((product) => (
                 <ProductCard 
                   key={product.id}
                   product={product}
@@ -175,8 +165,6 @@ const CategoryPage = () => {
           onComplete={clearCart}
         />
       )}
-      
-      <FAQ />
     </div>
   );
 };
