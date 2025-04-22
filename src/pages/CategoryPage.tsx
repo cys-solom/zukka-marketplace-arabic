@@ -1,13 +1,12 @@
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft, Plus } from 'lucide-react';
 import { useToast } from "@/hooks/use-toast";
 import { productCategories } from '@/data/productData';
 import ProductCard from '@/components/ProductCard';
 import CartSidebar from '@/components/CartSidebar';
-import OrderFormModal from '@/components/OrderFormModal';
 
 export type CartItem = {
   id: string;
@@ -22,9 +21,7 @@ const CategoryPage = () => {
   const { categoryId } = useParams<{ categoryId: string }>();
   const { toast } = useToast();
   const [cart, setCart] = useState<CartItem[]>([]);
-  const [showOrderForm, setShowOrderForm] = useState(false);
   
-  // Find the current category
   const category = productCategories.find(cat => cat.id === categoryId);
   
   if (!category) {
@@ -35,7 +32,7 @@ const CategoryPage = () => {
       </div>
     );
   }
-  
+
   const addToCart = (product: any) => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === product.id);
@@ -55,7 +52,7 @@ const CategoryPage = () => {
       }
     });
   };
-  
+
   const removeFromCart = (productId: string) => {
     setCart(prevCart => {
       const existingItem = prevCart.find(item => item.id === productId);
@@ -72,63 +69,74 @@ const CategoryPage = () => {
     });
   };
   
-  const calculateTotal = () => {
-    return cart.reduce((total, item) => total + (item.price * item.quantity), 0);
-  };
-  
-  const clearCart = () => {
-    setCart([]);
-    setShowOrderForm(false);
-  };
-  
-  // Animation variants
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: { 
-      opacity: 1,
-      transition: { 
-        when: "beforeChildren",
-        staggerChildren: 0.1
-      }
+  const handleDirectOrder = () => {
+    if (cart.length === 0) {
+      toast({
+        title: "السلة فارغة",
+        description: "الرجاء إضافة منتجات للسلة أولاً",
+        variant: "destructive"
+      });
+      return;
     }
+
+    const formattedCartItems = cart.map(item => 
+      `▸ ${item.name}%0A   الكمية: ${item.quantity} | السعر: ${item.price.toFixed(2)} ج.م | الإجمالي: ${(item.quantity * item.price).toFixed(2)} ج.م`
+    ).join("%0A%0A");
+    
+    const total = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    
+    const message = [
+      "✨ *طلب جديد* ✨",
+      "",
+      "🛒 *تفاصيل الطلب:*",
+      formattedCartItems,
+      "",
+      `💰 *المجموع النهائي: ${total.toFixed(2)} ج.م*`,
+    ].join("%0A");
+    
+    const whatsappNumber = '201030557250';
+    const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+    window.location.href = whatsappUrl;
   };
   
   return (
-    <div className="min-h-screen bg-background pt-16 pb-32">
+    <div className="min-h-screen bg-background">
       {/* Hero Section */}
       <section 
-        className="relative py-20 mb-12 overflow-hidden"
+        className="relative h-[40vh] flex items-center"
         style={{
           backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(${category.backgroundImage})`,
           backgroundSize: 'cover',
           backgroundPosition: 'center'
         }}
       >
-        <div className="absolute inset-0 bg-gradient-to-t from-background to-transparent opacity-20"></div>
         <div className="container mx-auto px-4 relative z-10">
+          <Link 
+            to="/" 
+            className="inline-flex items-center text-white hover:text-primary transition-colors bg-black/20 px-4 py-2 rounded-lg mb-6"
+          >
+            <ChevronLeft size={20} className="ml-1" />
+            <span>العودة للصفحة الرئيسية</span>
+          </Link>
           <motion.div 
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center max-w-3xl mx-auto"
+            className="text-right max-w-3xl"
           >
-            <Link to="/" className="inline-flex items-center text-white mb-6 hover:text-primary transition-colors">
-              <ChevronLeft size={20} className="ml-1" />
-              <span>العودة للصفحة الرئيسية</span>
-            </Link>
             <h1 className="text-4xl md:text-5xl font-bold text-white mb-4 font-tajawal">{category.name}</h1>
-            <p className="text-lg text-white/90 mb-8 font-cairo">{category.description}</p>
+            <p className="text-lg text-white/90 font-cairo">{category.description}</p>
           </motion.div>
         </div>
       </section>
       
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 py-12">
         <div className="flex flex-col md:flex-row gap-8">
           {/* Products Grid */}
           <motion.div 
-            variants={containerVariants}
-            initial="hidden"
-            animate="visible"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
             className="flex-1"
           >
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -144,27 +152,17 @@ const CategoryPage = () => {
           </motion.div>
           
           {/* Cart Sidebar */}
-          <div className="md:w-96 md:order-last order-first">
+          <div className="md:w-96">
             <CartSidebar 
               cart={cart}
               addToCart={addToCart}
               removeFromCart={removeFromCart}
-              clearCart={clearCart}
-              onCheckout={() => setShowOrderForm(true)}
+              clearCart={() => setCart([])}
+              onCheckout={handleDirectOrder}
             />
           </div>
         </div>
       </div>
-      
-      {/* Order Form Modal */}
-      {showOrderForm && (
-        <OrderFormModal 
-          cart={cart} 
-          total={calculateTotal()} 
-          onCancel={() => setShowOrderForm(false)} 
-          onComplete={clearCart}
-        />
-      )}
     </div>
   );
 };
