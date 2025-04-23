@@ -4,7 +4,7 @@ export const productCategories = [
     id: "fresh-meat",
     name: "اللحوم الطازجة",
     description: "أجود أنواع اللحوم الطازجة ذات الجودة العالية بأسعار منافسة. نقدم لحوم طازجة يوميًا من مصادر موثوقة.",
-    backgroundImage: "https://images.unsplash.com/photo-1618160702438-9b02ab6515c9?auto=format&fit=crop&q=80&w=1000",
+    backgroundImage: "https://i.postimg.cc/xj6FpW69/ibuki-tsubo-7i-RMOXXx-H7c-unsplash-1.jpg",
     icon: "🥩",
     products: [
       {
