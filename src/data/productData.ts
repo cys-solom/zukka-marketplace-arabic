@@ -4,15 +4,15 @@ export const productCategories = [
     id: "fresh-meat",
     name: "اللحوم الطازجة",
     description: "أجود أنواع اللحوم الطازجة ذات الجودة العالية بأسعار منافسة. نقدم لحوم طازجة يوميًا من مصادر موثوقة.",
-    backgroundImage: "https://i.postimg.cc/xj6FpW69/ibuki-tsubo-7i-RMOXXx-H7c-unsplash-1.jpg",
+    backgroundImage: "https://i.postimg.cc/mrZhRVbZ/peter-bravo-de-los-rios-Pw-HITIGz9-To-unsplash.jpg",
     icon: "🥩",
     products: [
       {
         id: "meat-1",
-        name: "لحم بقري مفروم",
+        name: "برجر فراخ",
         description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
         price: 180,
-        image: "https://images.unsplash.com/photo-1592686092916-672fa9e86866?auto=format&fit=crop&w=600&h=400",
+        image: "https://i.postimg.cc/mkn71JgS/sultan-abdulrazzaq-UDYje-Bw-FZf8-unsplash.jpg",
         isNew: false
       },
        {
