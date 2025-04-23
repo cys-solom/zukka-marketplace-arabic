@@ -12,17 +12,17 @@ const ProductCategories = () => {
     triggerOnce: true,
     threshold: 0.1,
   });
-  
+
   const [isVisible, setIsVisible] = useState(false);
   const controls = useAnimation();
-  
+
   useEffect(() => {
     if (inView) {
       setIsVisible(true);
       controls.start("visible");
     }
   }, [controls, inView]);
-  
+
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
@@ -32,7 +32,7 @@ const ProductCategories = () => {
       },
     },
   };
-  
+
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
     visible: {
@@ -45,17 +45,17 @@ const ProductCategories = () => {
       },
     },
   };
-  
+
   const hoverVariants = {
     rest: { scale: 1 },
-    hover: { scale: 1.03, transition: { duration: 0.3, type: "tween" } }
+    hover: { scale: 1.05, transition: { duration: 0.3, type: "tween" } }
   };
-  
+
   const buttonVariants = {
     rest: { scale: 1, backgroundColor: "var(--primary)" },
     hover: { scale: 1.05, backgroundColor: "var(--primary)", transition: { duration: 0.2 } }
   };
-  
+
   return (
     <section id="categories" className="py-24 relative overflow-hidden bg-gradient-to-b from-secondary/30 to-secondary/60">
       <div className="absolute inset-0 opacity-5 pointer-events-none" 
@@ -64,7 +64,7 @@ const ProductCategories = () => {
              backgroundRepeat: "repeat"
            }}></div>
       <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
-      
+
       <div className="container mx-auto px-4">
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
@@ -85,7 +85,7 @@ const ProductCategories = () => {
             اكتشف مجموعتنا المتنوعة من المنتجات الطازجة عالية الجودة. من اللحوم الطازجة إلى الوجبات السريعة الشهية.
           </p>
         </motion.div>
-        
+
         <motion.div
           ref={ref}
           variants={containerVariants}
