@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from "react-hook-form";
@@ -29,7 +28,6 @@ interface FormValues {
   name: string;
   address: string;
   phone: string;
-  email: string;
   notes: string;
 }
 
@@ -47,7 +45,6 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
       name: '',
       address: '',
       phone: '',
-      email: '',
       notes: ''
     }
   });
@@ -78,7 +75,6 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
         `▸ الاسم: ${data.name}`,
         `▸ الهاتف: ${data.phone}`,
         `▸ العنوان: ${data.address}`,
-        data.email && `▸ البريد: ${data.email}`,
         "",
         "🛍️ *طلباتك:*",
         formattedCartItems,
@@ -88,7 +84,7 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
         data.notes && `📝 *ملاحظاتك:*%0A${data.notes}`,
         "",
         "شكراً لثقتك بنا! ❤️",
-        "سيتم التواصل معك خلال 24 ساعة لتأكيد الطلب."
+        "سيتم التواصل معك خلال ساعة لتأكيد الطلب."
       ].filter(Boolean).join("%0A");
       
       const whatsappNumber = '201030557250'; // استبدل برقم واتسابك
@@ -175,8 +171,8 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                   rules={{ 
                     required: "حقل العنوان مطلوب",
                     minLength: {
-                      value: 10,
-                      message: "العنوان يجب أن يحتوي على 10 أحرف على الأقل"
+                      value: 5,
+                      message: "العنوان يجب أن يحتوي على 5 أحرف على الأقل"
                     }
                   }}
                   render={({ field }) => (
@@ -216,33 +212,6 @@ const OrderFormModal = ({ cart, total, onCancel, onComplete }: OrderFormModalPro
                           {...field}
                           className="border-2 focus:border-primary transition-colors"
                           autoComplete="tel"
-                        />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-                
-                <FormField
-                  control={form.control}
-                  name="email"
-                  rules={{ 
-                    pattern: {
-                      value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                      message: "بريد إلكتروني غير صالح"
-                    }
-                  }}
-                  render={({ field }) => (
-                    <FormItem className="space-y-2">
-                      <FormLabel className="font-cairo">البريد الإلكتروني (اختياري)</FormLabel>
-                      <FormControl>
-                        <Input 
-                          placeholder="example@domain.com" 
-                          dir="ltr"
-                          type="email"
-                          {...field}
-                          className="border-2 focus:border-primary transition-colors"
-                          autoComplete="email"
                         />
                       </FormControl>
                       <FormMessage />
