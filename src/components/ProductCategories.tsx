@@ -1,161 +1,125 @@
 import { useState, useEffect } from 'react';
-import { motion, useAnimation } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { Link, useLocation } from 'react-router-dom';
-import { Card, CardContent } from "@/components/ui/card";
+import { Beef, UtensilsCrossed, Soup } from 'lucide-react';
 import { Button } from "@/components/ui/button";
-import { ArrowLeft } from "lucide-react";
-import { productCategories } from '@/data/productData';
+import { Card, CardContent, CardFooter } from "@/components/ui/card";
+import { motion } from "framer-motion";
+import { useInView } from 'react-intersection-observer';
+
+const categories = [
+  {
+    id: 'meat',
+    title: 'اللحوم الطازجة',
+    description: 'نقدم أجود أنواع اللحوم الطازجة المذبوحة على الطريقة الإسلامية، من لحوم الضأن والبقر بمختلف أنواعها وقطعياتها.',
+    image: 'https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?q=80&w=2070&auto=format&fit=crop',
+    icon: Beef,
+    color: 'bg-meat-light',
+    accent: 'text-meat-dark',
+    buttonBg: 'bg-meat-dark'
+  },
+  {
+    id: 'meals',
+    title: 'الوجبات الجاهزة',
+    description: 'وجبات جاهزة شهية محضرة بعناية من أجود المكونات الطازجة، مثالية للعائلة والضيوف وبنكهات أصيلة ومميزة.',
+    image: 'https://images.unsplash.com/photo-1547928576-a4a33237cbc3?q=80&w=2070&auto=format&fit=crop',
+    icon: Soup,
+    color: 'bg-spice-light',
+    accent: 'text-spice-dark',
+    buttonBg: 'bg-spice-dark'
+  }
+];
 
 const ProductCategories = () => {
-  const location = useLocation();
   const [ref, inView] = useInView({
-    triggerOnce: true,
+    triggerOnce: false,
     threshold: 0.1,
   });
 
-  const [isVisible, setIsVisible] = useState(false);
-  const controls = useAnimation();
-
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [location.pathname]);
-
-  useEffect(() => {
-    if (inView) {
-      setIsVisible(true);
-      controls.start("visible");
-    }
-  }, [controls, inView]);
-
   const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
+    visible: { 
       opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-      },
-    },
+      transition: { 
+        duration: 0.6,
+        staggerChildren: 0.2
+      }
+    }
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 30 },
-    visible: {
-      opacity: 1,
+    visible: { 
+      opacity: 1, 
       y: 0,
-      transition: {
-        duration: 0.6,
-        type: "spring",
-        stiffness: 100,
-      },
-    },
+      transition: { duration: 0.6 }
+    }
   };
-
-  const hoverVariants = {
-    rest: { scale: 1 },
-    hover: { scale: 1.05, transition: { duration: 0.3, type: "tween" } }
-  };
-
-  const buttonVariants = {
-    rest: { scale: 1, backgroundColor: "var(--primary)" },
-    hover: { scale: 1.05, backgroundColor: "var(--primary)", transition: { duration: 0.2 } }
-  };
-
-  const displayedCategories = productCategories.slice(0, 3);
 
   return (
-    <section id="categories" className="py-24 relative overflow-hidden bg-gradient-to-b from-secondary/30 to-secondary/60">
-      <div className="absolute inset-0 opacity-5 pointer-events-none" 
-           style={{
-             backgroundImage: "url('https://www.transparenttextures.com/patterns/food.png')",
-             backgroundRepeat: "repeat"
-           }}></div>
-      <div className="absolute inset-0 bg-gradient-to-t from-background/50 to-transparent"></div>
-
+    <section id="products" className="py-24 relative">
+      {/* Decorative background elements */}
+      <div className="absolute top-0 left-0 w-full h-64 bg-gradient-to-b from-secondary/80 to-transparent -z-10"></div>
+      <div className="absolute bottom-0 left-0 w-full h-64 bg-gradient-to-t from-secondary/80 to-transparent -z-10"></div>
+      
+      {/* Subtle background pattern */}
+      <div 
+        className="absolute inset-0 opacity-5 -z-20" 
+        style={{
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/food.png')",
+          backgroundRepeat: "repeat"
+        }}
+      ></div>
+      
       <div className="container mx-auto px-4">
         <motion.div 
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7 }}
           className="text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={inView ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6 }}
         >
-          <h2 className="section-title text-4xl font-bold mb-4 relative inline-block">
-            فئات المنتجات
-            <motion.div 
-              className="absolute -bottom-2 left-1/2 transform -translate-x-1/2 h-1 bg-primary rounded-full" 
-              initial={{ width: 0 }}
-              animate={{ width: "70%" }}
-              transition={{ delay: 0.3, duration: 0.5 }}
-            />
-          </h2>
-          <p className="text-lg text-muted-foreground max-w-3xl mx-auto mt-4">
-            اكتشف مجموعتنا المتنوعة من المنتجات الطازجة عالية الجودة. من اللحوم الطازجة إلى الوجبات السريعة الشهية.
+          <h2 className="section-title text-center mx-auto">منتجاتنا المميزة</h2>
+          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            نقدم لكم مجموعة متنوعة من اللحوم والوجبات الجاهزة عالية الجودة بأسعار تنافسية
           </p>
         </motion.div>
-
-        <motion.div
-          ref={ref}
+        
+        <motion.div 
+          ref={ref} 
+          className="grid md:grid-cols-2 gap-8 lg:gap-12"
           variants={containerVariants}
           initial="hidden"
-          animate={controls}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
-          id="products"
+          animate={inView ? "visible" : "hidden"}
         >
-          {displayedCategories.map((category) => (
+          {categories.map((category) => (
             <motion.div key={category.id} variants={itemVariants}>
-              <motion.div 
-                variants={hoverVariants}
-                initial="rest"
-                whileHover="hover"
-                className="h-full"
-              >
-                <Card className="category-card h-full overflow-hidden border-transparent shadow-lg hover:shadow-xl transition-all duration-300 relative">
-                  <motion.div 
-                    className="h-56 overflow-hidden relative"
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.5 }}
-                    style={{
-                      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)), url(${category.backgroundImage})`,
-                      backgroundSize: 'cover',
-                      backgroundPosition: 'center'
-                    }}
-                  >
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <motion.div 
-                      initial={{ x: -10, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="absolute bottom-0 right-0 p-4 text-white"
-                    >
-                      {/* تم إزالة اسم الفئة من هنا */}
-                      <div className="font-bold text-3xl mb-1">{category.icon}</div>
-                    </motion.div>
-                  </motion.div>
-                  <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3> {/* تم نقل اسم الفئة إلى هنا */}
-                    <p className="text-foreground/80 mb-6 line-clamp-2">{category.description}</p>
-                    <div className="mt-4 flex justify-between items-center">
-                      <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">{category.products.length} منتج</span>
-                      <Link 
-                        to={`/category/${category.id}`} 
-                        aria-label={`عرض منتجات ${category.name}`}
-                        onClick={() => window.scrollTo(0, 0)}
-                      >
-                        <motion.div
-                          variants={buttonVariants}
-                          initial="rest"
-                          whileHover="hover"
-                        >
-                          <Button className="bg-primary hover:bg-primary/90 text-white font-medium group">
-                            عرض المنتجات
-                            <ArrowLeft size={16} className="mr-2 group-hover:translate-x-[-3px] transition-transform" />
-                          </Button>
-                        </motion.div>
-                      </Link>
+              <Card className="overflow-hidden border-none shadow-xl hover:shadow-2xl transition-all duration-500 h-full flex flex-col">
+                <div className="h-64 relative overflow-hidden group">
+                  <img 
+                    src={category.image} 
+                    alt={category.title} 
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent"></div>
+                  <div className="absolute bottom-0 right-0 p-4 w-full">
+                    <div className="flex items-center gap-3">
+                      <div className={`p-2 rounded-full ${category.color}`}>
+                        <category.icon className={category.accent} size={24} />
+                      </div>
+                      <h3 className="text-2xl font-bold text-white">{category.title}</h3>
                     </div>
-                  </CardContent>
-                </Card>
-              </motion.div>
+                  </div>
+                </div>
+                <CardContent className="pt-6 flex-grow">
+                  <p className="text-foreground/80 text-lg">{category.description}</p>
+                </CardContent>
+                <CardFooter className="pt-0 pb-6">
+                  <Button 
+                    className={`w-full text-white ${category.buttonBg} hover:opacity-90 transition-all duration-300 transform hover:scale-[1.02]`}
+                    onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
+                  >
+                    اطلب الآن
+                  </Button>
+                </CardFooter>
+              </Card>
             </motion.div>
           ))}
         </motion.div>

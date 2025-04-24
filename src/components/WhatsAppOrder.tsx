@@ -59,11 +59,8 @@ const WhatsAppOrder = () => {
     }, { threshold: 0.1 });
 
     const section = document.getElementById('whatsapp-order-section');
-    
     if (section) {
       observer.observe(section);
-    } else {
-      setIsSectionVisible(true);
     }
 
     return () => {
@@ -75,7 +72,11 @@ const WhatsAppOrder = () => {
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    if (name === 'phoneNumber') setPhoneError(null);
+    
+    if (name === 'phoneNumber') {
+      setPhoneError(null);
+    }
+    
     setFormData(prev => ({ ...prev, [name]: value }));
   };
 
@@ -94,10 +95,10 @@ const WhatsAppOrder = () => {
     }
 
     if (!validateEgyptianPhoneNumber(formData.phoneNumber)) {
-      setPhoneError("يرجى إدخال رقم هاتف صحيح (يبدأ بـ 01 ويتكون من 11 رقمًا)");
+      setPhoneError("يرجى إدخال رقم هاتف صحيح");
       toast({
         title: "خطأ في رقم الهاتف",
-        description: "يرجى إدخال رقم هاتف صحيح (يبدأ بـ 01 ويتكون من 11 رقمًا)",
+        description: "يرجى إدخال رقم هاتف صحيح",
         variant: "destructive"
       });
       setIsLoading(false);
@@ -105,26 +106,36 @@ const WhatsAppOrder = () => {
     }
 
     if (activeTab === 'whatsapp') {
-      // بناء رسالة الواتساب مع تنسيق محسن
-      const message = `طلب جديد%0A%0A👤 الاسم: ${formData.fullName}%0A📞 رقم الهاتف: ${formData.phoneNumber}%0A${formData.email ? `📧 البريد الإلكتروني: ${formData.email}%0A` : ''}%0A📦 تفاصيل الطلب:%0A${formData.orderDetails.replace(/\n/g, '%0A')}%0A%0Aشكرًا لاختياركم!`;
+      const message = `📦 طلب جديد:%0A
+- الاسم: ${formData.fullName}%0A
+- رقم الجوال: ${formData.phoneNumber}%0A
+${formData.email ? `- البريد الإلكتروني: ${formData.email}%0A` : ''}
+- تفاصيل الطلب: ${formData.orderDetails}%0A`;
+
+      const whatsappNumber = '201030557250';
+      const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
       
-      // إنشاء رابط واتساب مع تضمين الرسالة
-      const whatsappUrl = `https://wa.me/201030557250?text=${message}`;
-      
-      // فتح الرابط في نافذة جديدة بعد تأخير بسيط
       setTimeout(() => {
         window.open(whatsappUrl, '_blank');
         setIsLoading(false);
-        setFormData({ fullName: '', phoneNumber: '', email: '', orderDetails: '' });
-        toast({
-          title: "تم فتح واتساب بنجاح!",
-          description: "الرجاء إرسال الرسالة لتأكيد طلبك.",
+        
+        setFormData({
+          fullName: '',
+          phoneNumber: '',
+          email: '',
+          orderDetails: ''
         });
-      }, 500);
+        
+        toast({
+          title: "تم إرسال الطلب بنجاح!",
+          description: "سيتم التواصل معك قريباً.",
+        });
+      }, 800);
     } else {
-      // معالجة حالة الاتصال المباشر
-      window.location.href = `tel:01030557250`;
+      const phoneNumber = '01030557250';
+      window.location.href = `tel:${phoneNumber}`;
       setIsLoading(false);
+      
       toast({
         title: "جار الاتصال...",
         description: "يتم توجيهك للاتصال بنا مباشرة.",
@@ -137,42 +148,63 @@ const WhatsAppOrder = () => {
     visible: { 
       opacity: 1, 
       y: 0,
-      transition: { duration: 0.6, staggerChildren: 0.1 }
+      transition: { 
+        duration: 0.6,
+        staggerChildren: 0.1
+      }
     }
   };
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.4 } }
+    visible: { 
+      opacity: 1, 
+      y: 0,
+      transition: { duration: 0.4 }
+    }
   };
 
   return (
     <section 
       id="whatsapp-order" 
       className="py-24 relative overflow-hidden"
-      style={{ background: "linear-gradient(135deg, #f8f8f8 0%, #e8f4ea 100%)" }}
+      style={{
+        background: "linear-gradient(135deg, #f8f8f8 0%, #e8f4ea 100%)"
+      }}
     >
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute top-0 left-0 w-96 h-96 bg-primary/5 rounded-full -translate-x-1/2 -translate-y-1/2"></div>
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-accent/5 rounded-full translate-x-1/2 translate-y-1/2"></div>
       </div>
-
-      <div className="absolute inset-0 opacity-5 pointer-events-none" style={{ backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')", backgroundRepeat: "repeat" }}></div>
-
+      
+      <div 
+        className="absolute inset-0 opacity-5 pointer-events-none" 
+        style={{
+          backgroundImage: "url('https://www.transparenttextures.com/patterns/cubes.png')",
+          backgroundRepeat: "repeat"
+        }}
+      ></div>
+      
       <div id="whatsapp-order-section" className="container mx-auto px-4 relative z-10">
-        <motion.div className="text-center mb-12"
+        <motion.div 
+          className="text-center mb-12"
           initial={{ opacity: 0, y: 30 }}
           animate={isSectionVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
           transition={{ duration: 0.6 }}
         >
           <h2 className="section-title">اطلب الآن</h2>
           <p className="text-lg text-foreground/80 max-w-2xl mx-auto">
-            يمكنك طلب منتجاتنا بسهولة عبر واتساب أو الاتصال المباشر.
+            يمكنك طلب منتجاتنا بسهولة عبر واتساب أو الاتصال المباشر. فقط املأ النموذج أدناه وسنتواصل معك في أقرب وقت ممكن.
           </p>
         </motion.div>
-
-        <motion.div variants={containerVariants} initial="hidden" animate={isSectionVisible ? "visible" : "hidden"} className="flex justify-center">
-          <Card className="max-w-xl w-full shadow-2xl overflow-hidden border-none">
+        
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate={isSectionVisible ? "visible" : "hidden"}
+          className="flex justify-center"
+        >
+          <Card className="max-w-xl w-full shadow-2xl hover:shadow-2xl transition-all duration-500 overflow-hidden border-none">
             <div className="bg-gradient-to-r from-primary to-accent h-2"></div>
             <CardHeader className="bg-gradient-to-r from-primary/10 to-accent/10 flex flex-row gap-2 pb-6">
               <div className="flex w-full rounded-lg overflow-hidden">
@@ -195,19 +227,23 @@ const WhatsAppOrder = () => {
             <CardContent className="p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <Label htmlFor="fullName">الاسم الكامل *</Label>
-                  <Input 
-                    id="fullName" 
-                    name="fullName" 
-                    value={formData.fullName} 
-                    onChange={handleChange} 
-                    className="w-full border-2 focus:border-primary p-3 rounded-md" 
-                    required 
+                  <Label htmlFor="fullName" className="block text-foreground mb-1">
+                    الاسم الكامل *
+                  </Label>
+                  <Input
+                    id="fullName"
+                    name="fullName"
+                    value={formData.fullName}
+                    onChange={handleChange}
+                    className="w-full border-2 focus:border-primary p-3 rounded-md"
+                    required
                   />
                 </motion.div>
-
+                
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <Label htmlFor="phoneNumber">رقم الجوال *</Label>
+                  <Label htmlFor="phoneNumber" className="block text-foreground mb-1">
+                    ادخل رقم الجوال *
+                  </Label>
                   <Input
                     id="phoneNumber"
                     name="phoneNumber"
@@ -218,73 +254,81 @@ const WhatsAppOrder = () => {
                     required
                     dir="ltr"
                   />
-                  {phoneError && <p className="text-sm text-red-500 mt-1">{phoneError}</p>}
+                  {phoneError && (
+                    <p className="text-sm text-red-500 mt-1">{phoneError}</p>
+                  )}
                 </motion.div>
-
+                
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <Label htmlFor="email">البريد الإلكتروني (اختياري)</Label>
-                  <Input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    value={formData.email} 
-                    onChange={handleChange} 
-                    className="w-full border-2 focus:border-primary p-3 rounded-md" 
-                    dir="ltr" 
+                  <Label htmlFor="email" className="block text-foreground mb-1">
+                    البريد الإلكتروني (اختياري)
+                  </Label>
+                  <Input
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full border-2 focus:border-primary p-3 rounded-md"
+                    dir="ltr"
                   />
                 </motion.div>
-
+                
                 <motion.div variants={itemVariants} className="space-y-1">
-                  <Label htmlFor="orderDetails">تفاصيل الطلب *</Label>
-                  <Textarea 
-                    id="orderDetails" 
-                    name="orderDetails" 
-                    value={formData.orderDetails} 
-                    onChange={handleChange} 
-                    className="w-full min-h-[120px] border-2 focus:border-primary p-3 rounded-md" 
-                    placeholder="اكتب تفاصيل طلبك هنا..."
-                    required 
+                  <Label htmlFor="orderDetails" className="block text-foreground mb-1">
+                    تفاصيل الطلب *
+                  </Label>
+                  <Textarea
+                    id="orderDetails"
+                    name="orderDetails"
+                    value={formData.orderDetails}
+                    onChange={handleChange}
+                    className="w-full min-h-[120px] border-2 focus:border-primary p-3 rounded-md"
+                    required
                   />
                 </motion.div>
-
+                
                 <motion.div variants={itemVariants}>
                   <Button 
                     type="submit" 
                     className={`w-full py-6 text-white font-bold transition-all duration-300 transform hover:scale-[1.02] active:scale-[0.98] ${
-                      activeTab === 'whatsapp' ? 'bg-green-600 hover:bg-green-700' : 'bg-primary hover:bg-primary/90'
-                    }`} 
+                      activeTab === 'whatsapp' 
+                        ? 'bg-green-600 hover:bg-green-700' 
+                        : 'bg-primary hover:bg-primary/90'
+                    }`}
                     disabled={isLoading}
                   >
                     {activeTab === 'whatsapp' ? (
                       <>
                         <WhatsappIcon className="ml-2" />
-                        {isLoading ? 'جارِ التحضير...' : 'إرسال الطلب عبر واتساب'}
+                        {isLoading ? 'جارِ المعالجة...' : 'إرسال الطلب عبر واتساب'}
                       </>
                     ) : (
                       <>
                         <Phone size={20} className="ml-2" />
-                        {isLoading ? 'جارِ التحضير...' : 'اتصل بنا مباشرة'}
+                        {isLoading ? 'جارِ المعالجة...' : 'اتصل بنا مباشرة'}
                       </>
                     )}
                   </Button>
                 </motion.div>
 
                 <motion.div variants={itemVariants} className="text-center text-sm text-muted-foreground pt-2">
-                  {activeTab === 'whatsapp'
-                    ? 'سيتم فتح محادثة واتساب مع نص الطلب جاهزًا للإرسال'
-                    : 'سيتم الاتصال بالرقم: 01030557250'
-                  }
+                  {activeTab === 'whatsapp' ? (
+                    <>سيتم تحويلك إلى تطبيق واتساب لإكمال طلبك</>
+                  ) : (
+                    <>سيتم الاتصال بالرقم: 01030557250</>
+                  )}
                 </motion.div>
               </form>
             </CardContent>
           </Card>
         </motion.div>
       </div>
-
+      
       <div className="fixed bottom-5 left-1/2 transform -translate-x-1/2 z-50 md:hidden animate-float">
         <Button 
-          onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({ behavior: 'smooth' })} 
-          className="whatsapp-btn rounded-full px-6 py-3 shadow-lg bg-green-600 hover:bg-green-700"
+          onClick={() => document.getElementById('whatsapp-order')?.scrollIntoView({behavior: 'smooth'})}
+          className="whatsapp-btn rounded-full px-6 py-3 shadow-lg"
         >
           <WhatsappIcon className="ml-2" />
           اطلب الآن

@@ -18,61 +18,6 @@ const WhatsappIcon = (props: any) => (
   </svg>
 );
 
-const SocialIcons = () => {
-  const socialLinks = [
-    {
-      name: 'Facebook',
-      icon: <Facebook size={18} />,
-      url: 'https://www.facebook.com/zukkamarketplace',
-      color: 'hover:bg-[#1877F2]'
-    },
-    {
-      name: 'Instagram',
-      icon: <Instagram size={18} />,
-      url: 'https://www.instagram.com/zukkamarketplace',
-      color: 'hover:bg-gradient-to-r from-[#833AB4] via-[#C13584] to-[#E1306C]'
-    },
-    {
-      name: 'WhatsApp',
-      icon: <WhatsappIcon size={18} />,
-      url: 'https://wa.me/201030557250',
-      color: 'hover:bg-[#25D366]'
-    },
-    {
-      name: 'Email',
-      icon: <Mail size={18} />,
-      url: 'mailto:info@zukkamarket.com',
-      color: 'hover:bg-[#EA4335]'
-    }
-  ];
-
-  return (
-    <div className="flex space-x-4 space-x-reverse">
-      {socialLinks.map((social, index) => (
-        <motion.a
-          key={social.name}
-          href={social.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className={`w-10 h-10 rounded-full bg-white/10 flex items-center justify-center transition-all duration-300 ${social.color} hover:text-white`}
-          aria-label={social.name}
-          whileHover={{ 
-            scale: 1.1,
-            rotate: [0, -10, 10, 0],
-            transition: { duration: 0.5 }
-          }}
-          whileTap={{ scale: 0.9 }}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.1, duration: 0.5 }}
-        >
-          {social.icon}
-        </motion.a>
-      ))}
-    </div>
-  );
-};
-
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({
@@ -129,7 +74,29 @@ const Footer = () => {
             <p className="text-white/80 leading-relaxed mb-6">
               نقدم أفضل اللحوم والبهارات بجودة عالية وأسعار مناسبة. جميع منتجاتنا طازجة ومختارة بعناية.
             </p>
-            <SocialIcons />
+            <div className="flex space-x-4 space-x-reverse">
+              <a 
+                href="#" 
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                aria-label="Instagram"
+              >
+                <Instagram size={18} />
+              </a>
+              <a 
+                href="#" 
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                aria-label="Facebook"
+              >
+                <Facebook size={18} />
+              </a>
+              <a 
+                href="https://wa.me/201017812946" 
+                className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors"
+                aria-label="WhatsApp"
+              >
+                <WhatsappIcon size={18} />
+              </a>
+            </div>
           </div>
           
           <div>
@@ -167,10 +134,9 @@ const Footer = () => {
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
                 <MapPin size={18} className="mt-1 shrink-0 text-accent" />
-                <div>
-                  <div className="text-white/80">الفرع الاول - الشرقية</div>
-                  <div className="text-white/80">الفرع الثاني - 6 أكتوبر</div>
-                </div>
+                <span className="text-white/80">
+                  6 أكتوبر
+                </span>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} className="mt-1 shrink-0 text-accent" />
@@ -198,7 +164,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3 mt-6">
                 <span className="text-white/80">
-                  صاحبة المتجر : علياء شوقي
+                  صاحبة المتجر: علياء شوقي
                 </span>
               </li>
             </ul>
