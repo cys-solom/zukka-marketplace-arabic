@@ -1,13 +1,14 @@
 import { useState, useEffect } from 'react';
 import { motion, useAnimation } from 'framer-motion';
 import { useInView } from 'react-intersection-observer';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { productCategories } from '@/data/productData';
 
 const ProductCategories = () => {
+  const location = useLocation();
   const [ref, inView] = useInView({
     triggerOnce: true,
     threshold: 0.1,
@@ -15,6 +16,11 @@ const ProductCategories = () => {
 
   const [isVisible, setIsVisible] = useState(false);
   const controls = useAnimation();
+
+  // حل مشكلة التمركز عند تغيير المسار
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   useEffect(() => {
     if (inView) {
@@ -56,6 +62,9 @@ const ProductCategories = () => {
     hover: { scale: 1.05, backgroundColor: "var(--primary)", transition: { duration: 0.2 } }
   };
 
+  // عرض أول ثلاث فئات فقط
+  const displayedCategories = productCategories.slice(0, 3);
+
   return (
     <section id="categories" className="py-24 relative overflow-hidden bg-gradient-to-b from-secondary/30 to-secondary/60">
       <div className="absolute inset-0 opacity-5 pointer-events-none" 
@@ -94,7 +103,7 @@ const ProductCategories = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"
           id="products"
         >
-          {productCategories.map((category) => (
+          {displayedCategories.map((category) => (
             <motion.div key={category.id} variants={itemVariants}>
               <motion.div 
                 variants={hoverVariants}
@@ -128,7 +137,11 @@ const ProductCategories = () => {
                     <p className="text-foreground/80 mb-6 line-clamp-2">{category.description}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">{category.products.length} منتج</span>
-                      <Link to={`/category/${category.id}`} aria-label={`عرض منتجات ${category.name}`}>
+                      <Link 
+                        to={`/category/${category.id}`} 
+                        aria-label={`عرض منتجات ${category.name}`}
+                        onClick={() => window.scrollTo(0, 0)} // إضافة للتأكد من التمرير للأعلى
+                      >
                         <motion.div
                           variants={buttonVariants}
                           initial="rest"
