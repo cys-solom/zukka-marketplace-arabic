@@ -17,6 +17,7 @@ const ProductCategories = () => {
   const [isVisible, setIsVisible] = useState(false);
   const controls = useAnimation();
 
+  // حل مشكلة التمركز عند تغيير المسار
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [location.pathname]);
@@ -61,6 +62,7 @@ const ProductCategories = () => {
     hover: { scale: 1.05, backgroundColor: "var(--primary)", transition: { duration: 0.2 } }
   };
 
+  // عرض أول ثلاث فئات فقط
   const displayedCategories = productCategories.slice(0, 3);
 
   return (
@@ -127,19 +129,18 @@ const ProductCategories = () => {
                       transition={{ delay: 0.2, duration: 0.5 }}
                       className="absolute bottom-0 right-0 p-4 text-white"
                     >
-                      {/* تم إزالة اسم الفئة من هنا */}
                       <div className="font-bold text-3xl mb-1">{category.icon}</div>
+                      <h3 className="text-2xl font-bold">{category.name}</h3>
                     </motion.div>
                   </motion.div>
                   <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3> {/* تم نقل اسم الفئة إلى هنا */}
                     <p className="text-foreground/80 mb-6 line-clamp-2">{category.description}</p>
                     <div className="mt-4 flex justify-between items-center">
                       <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">{category.products.length} منتج</span>
                       <Link 
                         to={`/category/${category.id}`} 
                         aria-label={`عرض منتجات ${category.name}`}
-                        onClick={() => window.scrollTo(0, 0)}
+                        onClick={() => window.scrollTo(0, 0)} // إضافة للتأكد من التمرير للأعلى
                       >
                         <motion.div
                           variants={buttonVariants}

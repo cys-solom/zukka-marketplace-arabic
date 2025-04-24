@@ -1,52 +1,22 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react-swc";
 import path from "path";
-import history from "connect-history-api-fallback";
+import { componentTagger } from "lovable-tagger";
 
-export default defineConfig({
-  plugins: [react()],
-  
+// https://vitejs.dev/config/
+export default defineConfig(({ mode }) => ({
   server: {
-    host: true,
+    host: "::",
     port: 8080,
-    strictPort: true,
-    middlewareMode: true,
-    fs: {
-      strict: false
-    },
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3000',
-        changeOrigin: true,
-        secure: false
-      }
-    }
   },
-
-  preview: {
-    port: 4173,
-    host: true,
-    strictPort: true,
-    historyApiFallback: true
-  },
-
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    chunkSizeWarningLimit: 1600,
-    rollupOptions: {
-      output: {
-        manualChunks: {
-          react: ['react', 'react-dom'],
-          router: ['react-router-dom']
-        }
-      }
-    }
-  },
-
+  plugins: [
+    react(),
+    mode === 'development' &&
+    componentTagger(),
+  ].filter(Boolean),
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, "./src")
-    }
-  }
-});
+      "@": path.resolve(__dirname, "./src"),
+    },
+  },
+}));

@@ -2,30 +2,14 @@ export const productCategories = [
   {
     id: "fresh-meat",
     name: "اللحوم الطازجة",
-    description: "أجود أنواع اللحوم الطازجة ذات الجودة العالية بأسعار منافسة",
+    description: "أجود أنواع اللحوم الطازجة ذات الجودة العالية",
     backgroundImage: "https://i.postimg.cc/mrZhRVbZ/meat-bg.jpg",
     icon: "🥩",
     products: [
       {
         id: "meat-1",
         name: "لحم بقري مفروم",
-        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
-        price: 180,
-        image: "https://i.postimg.cc/meat1.jpg",
-        isNew: false
-      },
-        {
-        id: "meat-1",
-        name: "لحم بقري مفروم",
-        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
-        price: 180,
-        image: "https://i.postimg.cc/meat1.jpg",
-        isNew: false
-      },
-        {
-        id: "meat-1",
-        name: "لحم بقري مفروم",
-        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        description: "لحم بقري طازج 100%",
         price: 180,
         image: "https://i.postimg.cc/meat1.jpg",
         isNew: false
@@ -43,17 +27,25 @@ export const productCategories = [
   {
     id: "fast-food",
     name: "الوجبات السريعة",
-    description: "مجموعة متنوعة من أشهى الوجبات السريعة المحضرة بعناية",
+    description: "أشهى الوجبات السريعة المحضرة بعناية",
     backgroundImage: "https://i.postimg.cc/fast-food-bg.jpg",
     icon: "🍔",
     products: [
       {
         id: "fast-1",
         name: "تشيز برجر",
-        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        description: "برجر لحم مع جبن شيدر",
         price: 85,
         image: "https://i.postimg.cc/burger1.jpg",
         isNew: true
+      },
+      {
+        id: "fast-2",
+        name: "بيتزا بيبروني",
+        description: "بيتزا بالجبن والبيبروني",
+        price: 120,
+        image: "https://i.postimg.cc/pizza1.jpg",
+        isNew: false
       }
     ]
   },
