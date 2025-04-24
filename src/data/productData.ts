@@ -14,6 +14,22 @@ export const productCategories = [
         image: "https://i.postimg.cc/meat1.jpg",
         isNew: false
       },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://i.postimg.cc/meat1.jpg",
+        isNew: false
+      },
+        {
+        id: "meat-1",
+        name: "لحم بقري مفروم",
+        description: "لحم بقري مفروم طازج، مثالي للكفتة والبرجر",
+        price: 180,
+        image: "https://i.postimg.cc/meat1.jpg",
+        isNew: false
+      },
       {
         id: "meat-2",
         name: "شرائح ستيك",
