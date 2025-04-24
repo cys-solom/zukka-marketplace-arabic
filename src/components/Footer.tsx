@@ -133,10 +133,12 @@ const Footer = () => {
             <h3 className="text-xl font-bold mb-6 relative inline-block after:content-[''] after:absolute after:w-12 after:h-0.5 after:bg-accent after:right-0 after:bottom-0 pb-2">معلومات التواصل</h3>
             <ul className="space-y-4">
               <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-1 shrink-0 text-accent" />
-                <span className="text-white/80">
-                  6 أكتوبر
-                </span>
+              <MapPin size={18} className="mt-1 shrink-0 text-accent" />
+<div>
+  <div className="text-white/80">الفرع الاول - الشرقية</div>
+  <div className="text-white/80">الفرع الثاني - 6 أكتوبر</div>
+</div>
+
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} className="mt-1 shrink-0 text-accent" />
@@ -164,7 +166,7 @@ const Footer = () => {
               </li>
               <li className="flex items-start gap-3 mt-6">
                 <span className="text-white/80">
-                  صاحبة المتجر: علياء شوقي
+                  صاحبة المتجر : علياء شوقي
                 </span>
               </li>
             </ul>
