@@ -121,21 +121,15 @@ const ProductCategories = () => {
                     }}
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
-                    <motion.div 
-                      initial={{ x: -10, opacity: 0 }}
-                      whileInView={{ x: 0, opacity: 1 }}
-                      transition={{ delay: 0.2, duration: 0.5 }}
-                      className="absolute bottom-0 right-0 p-4 text-white"
-                    >
-                      {/* تم إزالة اسم الفئة من هنا */}
-                      <div className="font-bold text-3xl mb-1">{category.icon}</div>
-                    </motion.div>
+                    {/* تم إزالة جميع النصوص من أعلى الصورة */}
                   </motion.div>
                   <CardContent className="p-6">
-                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3> {/* تم نقل اسم الفئة إلى هنا */}
-                    <p className="text-foreground/80 mb-6 line-clamp-2">{category.description}</p>
-                    <div className="mt-4 flex justify-between items-center">
-                      <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">{category.products.length} منتج</span>
+                    <h3 className="text-2xl font-bold mb-2">{category.name}</h3>
+                    <p className="text-foreground/80 mb-4 line-clamp-2">{category.description}</p>
+                    <div className="flex justify-between items-center mt-4">
+                      <span className="text-sm bg-secondary/50 px-3 py-1 rounded-full">
+                        {category.products.length} منتج
+                      </span>
                       <Link 
                         to={`/category/${category.id}`} 
                         aria-label={`عرض منتجات ${category.name}`}
