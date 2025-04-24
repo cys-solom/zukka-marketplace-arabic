@@ -497,7 +497,244 @@ export const productCategories = [
         image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
         isNew: true
       }
-    
     ]
-  }
-];
+  },
+  {
+    id: "fast-food",
+    name: "الوجبات السريعة",
+    description: "مجموعة متنوعة من أشهى الوجبات السريعة المحضرة بعناية. لدينا برجر، بيتزا، شاورما وغيرها الكثير.",
+    backgroundImage: "https://images.unsplash.com/photo-1561758033-7e924f619b47?auto=format&fit=crop&q=80&w=1000",
+    icon: "🍔",
+    products: [
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+     {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+ {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
+      {
+        id: "fast-1",
+        name: "تشيز برجر",
+        description: "برجر لحم مع جبن شيدر وصلصة خاصة",
+        price: 85,
+        image: "https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=600&h=400",
+        isNew: true
+      },
